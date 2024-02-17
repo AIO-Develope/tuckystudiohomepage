@@ -1,13 +1,17 @@
 <template>
-  <div class="container">
+  <div class="nav-background">
+    <div class="container">
     <header class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
         <li class="nav-item"><router-link to="/" class="nav-link" :class="{ 'active': $route.path === '/' }">Home</router-link></li>
         <li class="nav-item"><router-link to="/projects" class="nav-link" :class="{ 'active': $route.path === '/projects' }">Projects</router-link></li>
       </ul>
     </header>
-    <router-view></router-view>
   </div>
+  </div>
+  
+  <router-view></router-view>
+
   
 </template>
 
@@ -22,6 +26,10 @@ export default {
 </script>
 
 <style scoped>
+
+.nav-background{
+  background-color: #fafafa;
+}
 .nav-item {
   margin-right: 10px;
 }
