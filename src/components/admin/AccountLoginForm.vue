@@ -50,7 +50,9 @@ export default {
   },
   async mounted() {
     this.loggedIn = await verifyToken();
-    console.log(this.loggedIn)
+    if (this.loggedIn) {
+      this.$router.push('/account');
+    }
   },
   methods: {
 
@@ -76,15 +78,15 @@ export default {
         });
         const result = await response.json();
         if (response.ok) {
-          // Save token and username in cookies
           document.cookie = `token=${result.token}; path=/`;
           document.cookie = `username=${this.username}; path=/`;
 
           this.error = '';
           this.success = 'Successfully logged in.';
           this.loggedIn = true;
-
           location.reload();
+
+
         } else {
           this.success = '';
           this.error = result.message;
@@ -94,6 +96,10 @@ export default {
         this.error = 'An error occurred. Please try again later.';
       }
     }
+
+
+
+
   }
 };
 </script>

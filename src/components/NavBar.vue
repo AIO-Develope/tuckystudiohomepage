@@ -17,7 +17,8 @@
         </ul>
         <div v-if="isLoggedIn" class="col-md-3 text-end">
           <div class="dropdown">
-            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-bs-toggle="dropdown" aria-expanded="false">
               {{ username || 'Profile' }}
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -55,16 +56,19 @@ export default {
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
-      this.loggedIn = false;
+      this.isLoggedIn = false;
+      this.username = '';
 
-      location.reload();
+      // Redirect to /login
+      this.$router.push('/login');
     },
+
 
     async checkToken() {
       try {
         this.isLoggedIn = await verifyToken();
         console.log(this.isLoggedIn);
-        
+
         const usernameCookie = this.getCookie('username');
         if (usernameCookie) {
           this.username = usernameCookie;
@@ -77,7 +81,7 @@ export default {
       this.$router.push('/login');
     },
     goToAccount() {
-      // Logic to navigate to the account page
+      this.$router.push('/account');
     },
     getCookie(name) {
       const value = `; ${document.cookie}`;
@@ -108,7 +112,7 @@ export default {
 
 .nav-item {
   margin-right: 10px;
-  transition: all 0.3s ease; 
+  transition: all 0.3s ease;
 }
 
 .nav-item:hover {
