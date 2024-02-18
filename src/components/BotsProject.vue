@@ -72,6 +72,7 @@
 .card-title {
     font-size: 1.5rem;
     margin-top: 1rem;
+    font-size: 30px;
 }
 
 .card-text {
