@@ -78,7 +78,7 @@
 .card-text {
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
-    text-align: justify; /* Aligning text as block text */
+    text-align: justify;
     margin: 30px;
 
 }

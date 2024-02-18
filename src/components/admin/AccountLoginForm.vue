@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <div v-if="!loggedIn">
+    <div v-if="!loggedIn" class="login-form">
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="card">
@@ -107,11 +107,22 @@ export default {
 </script>
 
 <style>
-.error {
-  color: red;
+.login-form {
+  animation: flyAndFadeIn 0.5s ease forwards;
+  opacity: 0;
 }
 
-.success {
-  color: green;
+@keyframes flyAndFadeIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
+
+
 </style>
+

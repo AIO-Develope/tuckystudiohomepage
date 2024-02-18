@@ -122,4 +122,9 @@ export default {
 .btn-outline-info:hover {
   color: #fff;
 }
+
+
+.btn-outline-info:focus {
+  color: #fff;
+}
 </style>
