@@ -1,19 +1,26 @@
 <template>
-    <div class="py-5 bg-light">
+    <div class="py-5 background">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 text-center fly-in" style="animation-delay: 0.1s; margin-bottom: 40px;">
-                    <img class="rounded-circle mb-4" src="../assets/images/bots/goofy.jpeg" alt="Generic placeholder image" width="140" height="140">
-                    <h2>Bot 1</h2>
-                    <p class="mb-4">Elevate your Discord server with our versatile bot! From robust moderation tools to entertaining features like games and music, our bot has everything you need to enhance your community. Keep your server safe, engage your members, and customize your experience with ease. Join thousands of satisfied server owners and invite our bot today to see the difference!</p>
-                    <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+            <div class="row justify-content-center align-items-stretch">
+                <div class="fly-in col-lg-4 text-center mb-4" style="animation-delay: 0.1s;">
+                    <div class="card">
+                        <img class="rounded-circle mt-4" src="../assets/images/bots/goofy.jpeg" alt="Bot 1" width="140" height="140">
+                        <div class="card-body">
+                            <strong class="card-title">Goofy</strong>
+                            <p class="card-text">Elevate your Discord server with our versatile bot! From robust moderation tools to entertaining features like games and music, our bot has everything you need to enhance your community.</p>
+                            <div class="read-more">Read more</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-4 text-center fly-in" style="animation-delay: 0.2s; margin-bottom: 40px;">
-                    <img class="rounded-circle mb-4" src="../assets/images/bots/cryptix.png" alt="Generic placeholder image" width="140" height="140">
-                    <h2>Bot 2</h2>
-                    <p class="mb-4">
-Introducing Cryptix, your go-to Discord Crypto bot equipped with an array of special features tailored for crypto enthusiasts! With Cryptix, you can effortlessly display the latest cryptocurrency prices in the currency of your country, providing valuable insights to your community.</p>
-                    <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+                <div class="fly-in col-lg-4 text-center mb-4" style="animation-delay: 0.2s;">
+                    <div class="card">
+                        <img class="rounded-circle mt-4" src="../assets/images/bots/cryptix.png" alt="Bot 2" width="140" height="140">
+                        <div class="card-body">
+                            <strong class="card-title">Cryptix</strong>
+                            <p class="card-text">Introducing Cryptix, your go-to Discord Crypto bot equipped with an array of special features tailored for crypto enthusiasts! With Cryptix, you can effortlessly display the latest cryptocurrency prices in the currency of your country, providing valuable insights to your community.</p>
+                            <div class="read-more">Read more</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,20 +28,77 @@ Introducing Cryptix, your go-to Discord Crypto bot equipped with an array of spe
 </template>
 
 <style scoped>
-    .square-img {
-        width: 100%;
-        height: auto;
-    }
-    .fly-in {
-        animation: flyIn 0.5s ease forwards;
-        opacity: 0;
-        transform: translateY(-50px);
-    }
+.background{
+    background-color: #f3f3f3;
+}
+.card {
+    border: none;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+}
 
-    @keyframes flyIn {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+.card img {
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    margin: auto;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.card-text {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    text-align: justify; /* Aligning text as block text */
+    margin: 30px;
+
+}
+
+.read-more {
+    font-size: 1rem;
+    color: #007bff;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.fly-in {
+    animation: flyIn 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+@keyframes flyIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
 </style>
