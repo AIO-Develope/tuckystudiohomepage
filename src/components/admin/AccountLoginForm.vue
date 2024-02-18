@@ -37,6 +37,7 @@
 
 <script>
 import { verifyToken } from '@/utils/authVerify';
+import config from '../../../config';
 
 export default {
   data() {
@@ -45,7 +46,9 @@ export default {
       password: '',
       error: '',
       success: '',
-      loggedIn: false
+      loggedIn: false,
+      apiUrl: config.apiUrl,
+
     };
   },
   async mounted() {
@@ -66,7 +69,7 @@ export default {
     },
     async login() {
       try {
-        const response = await fetch('http://localhost:3000/auth/login', {
+        const response = await fetch(`${this.apiUrl}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

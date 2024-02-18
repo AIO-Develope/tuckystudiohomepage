@@ -1,3 +1,4 @@
+import config from '../../config';
 
 export async function verifyToken() {
     const token = getCookie("token");
@@ -16,7 +17,7 @@ export async function verifyToken() {
     };
   
     try {
-      const response = await fetch("http://localhost:3000/auth/verify", requestOptions);
+      const response = await fetch(`${config.apiUrl}/auth/verify`, requestOptions);
       if (response.ok) {
         return true;
       } else {
