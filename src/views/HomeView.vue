@@ -1,9 +1,6 @@
 <template>
     <HomeHeroTitle/>
     <BotsProject/>
-    <BotsProject/>
-
-    <BotsProject/>
 
 
 
