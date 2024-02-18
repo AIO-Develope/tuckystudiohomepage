@@ -1,14 +1,14 @@
 <template>
     <HomeHeroTitle/>
     <HomeHeroTitle/>
-
+    <HomeHeroTitle/>
+    <HomeHeroTitle/>
+    <HomeHeroTitle/>
+    <HomeHeroTitle/>
+    <HomeHeroTitle/>
+    <HomeHeroTitle/>
     <HomeHeroTitle/>
 
-    <HomeHeroTitle/>
-
-    <HomeHeroTitle/>
-
-    <HomeHeroTitle/>
 
 </template>
 

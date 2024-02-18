@@ -44,7 +44,12 @@
   }
   
   .nav-background {
-    background-color: #fafafa;
+    background-color: rgba(250, 250, 250, 0.8);
+  backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    
   }
   
   .nav-item {
@@ -60,3 +65,4 @@
     color: #fff;
   }
   </style>
+  
