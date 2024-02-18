@@ -16,7 +16,7 @@
             </li>
           </ul>
           <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-info">Login</button>
+            <button type="button" @click="goToLogin" class="btn btn-outline-info">Login</button>
           </div>
         </header>
       </div>
@@ -30,7 +30,12 @@
       currentPage() {
         return this.$route.path;
       }
+    },
+    methods: {
+    goToLogin() {
+      this.$router.push('/login');
     }
+  }
   };
   </script>
   
