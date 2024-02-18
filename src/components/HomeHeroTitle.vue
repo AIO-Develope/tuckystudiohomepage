@@ -20,18 +20,18 @@
 
 <style scoped>
 .hero {
-  padding-top: 150px;
+  padding-top: 100px;
   padding-bottom: 150px;
-  opacity: 0; /* Initially hide the section */
-  animation: fadeIn 1s forwards; /* Apply animation on load */
+  opacity: 0;
+  animation: fadeIn 1s forwards;
 }
 
 @keyframes fadeIn {
   from {
-    opacity: 0; /* Start with opacity 0 */
+    opacity: 0;
   }
   to {
-    opacity: 1; /* End with opacity 1 */
+    opacity: 1;
   }
 }
 

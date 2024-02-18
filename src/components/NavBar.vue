@@ -44,7 +44,7 @@
   }
   
   .nav-background {
-    background-color: rgba(250, 250, 250, 0.8);
+    background-color: rgb(237, 237, 237, 0.8);
   backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
