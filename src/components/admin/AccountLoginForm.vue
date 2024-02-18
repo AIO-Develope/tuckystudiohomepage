@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5" v-if="!loggedIn">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card">
@@ -20,6 +20,7 @@
             </form>
           </div>
           <div v-if="error" class="card-footer bg-danger text-white">{{ error }}</div>
+          <div v-if="success" class="card-footer bg-success text-white">{{ success }}</div>
         </div>
       </div>
     </div>
@@ -27,13 +28,21 @@
 </template>
 
 <script>
+import { verifyToken } from '@/utils/authVerify';
+
 export default {
   data() {
     return {
       username: '',
       password: '',
-      error: ''
+      error: '',
+      success: '',
+      loggedIn: false
     };
+  },
+  async mounted() {
+    this.loggedIn = await verifyToken();
+    console.log(this.loggedIn)
   },
   methods: {
     async login() {
@@ -48,15 +57,30 @@ export default {
             password: this.password
           })
         });
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.message || 'Login failed');
+        const result = await response.json();
+        if (response.ok) {
+          document.cookie = `token=${result.token}; path=/`;
+          this.error = '';
+          this.success = 'Successfully logged in.';
+          this.loggedIn = true;
+        } else {
+          this.success = '';
+          this.error = result.message;
         }
-        // Handle successful login, e.g., redirect or store token
       } catch (error) {
-        this.error = error.message;
+        console.error('Error:', error);
+        this.error = 'An error occurred. Please try again later.';
       }
     }
   }
 };
 </script>
+
+<style>
+.error {
+  color: red;
+}
+.success {
+  color: green;
+}
+</style>
