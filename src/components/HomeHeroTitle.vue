@@ -9,7 +9,7 @@
             <div class="hero-content">
               <h2 class="hero-title">Tucky Studio</h2>
               <p class="section-text">
-                A community of developers and students where you can interact and make the team. Explore the science-tech related projects and works.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel veniam est voluptate in exercitationem fugiat quasi asperiores neque sequi, amet voluptas harum quae blanditiis laborum quibusdam accusantium odio consequatur veritatis!
               </p>
             </div>
           </div>
@@ -20,33 +20,33 @@
   
   <style scoped>
     .hero {
-      padding-top: 150px; /* Adjusted padding top */
-      padding-bottom: 150px; /* Adjusted padding bottom */
+      padding-top: 150px;
+      padding-bottom: 150px;
     }
   
     .hero-image {
-      width: 100%; /* Make the image fill its container */
-      max-width: 300px; /* Limit maximum width */
-      height: auto; /* Maintain aspect ratio */
+      width: 100%;
+      max-width: 300px;
+      height: auto;
     }
   
     .hero-content {
-      padding: 0 20px; /* Adjusted spacing */
+      padding: 0 20px;
     }
   
     .hero-title {
-      font-size: 2.5rem; /* Increase font size */
-      margin-bottom: 20px; /* Add space below title */
-      font-weight: bold; /* Make title bolder */
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Change font */
-      color: #333; /* Change title color */
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
     }
   
     .section-text {
-      font-size: 1.2rem; /* Increase font size */
-      font-weight: bold; /* Make text bolder */
-      color: #666; /* Change text color */
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Change font */
+      font-size: 1.2rem;
+      font-weight: lighter;
+      color: #666;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
   </style>
   
