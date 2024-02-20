@@ -1,7 +1,7 @@
 <template>
   <div class="nav-background">
     <div class="container">
-      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
         <router-link to="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none fs-4">
           <strong id="HeadTitle">Tucky Studio</strong>
         </router-link>
@@ -81,7 +81,7 @@ export default {
       this.$router.push('/login');
     },
     goToAccount() {
-      this.$router.push('/account');
+      this.$router.push('/account/home');
     },
     getCookie(name) {
       const value = `; ${document.cookie}`;

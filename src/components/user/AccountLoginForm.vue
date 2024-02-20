@@ -53,7 +53,7 @@ export default {
   async mounted() {
     this.loggedIn = await verifyToken();
     if (this.loggedIn) {
-      this.$router.push('/account');
+      this.$router.push('/account/home');
     }
   },
   methods: {
