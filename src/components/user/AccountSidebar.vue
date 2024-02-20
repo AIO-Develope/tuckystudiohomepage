@@ -9,12 +9,12 @@
       <ul class="nav flex-column">
         <li class="nav-item">
           <button @click="goTo('/account/home')" :class="{ active: isCurrentPage('/account/home') }">
-            <i class="fas fa-home"></i> Home
+            <i class="fas fa-home"></i> Staff
           </button>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="isAdminBool">
           <button @click="goTo('/account/dashboard')" :class="{ active: isCurrentPage('/account/dashboard') }">
-            <i class="fas fa-chart-bar"></i> Dashboard
+            <i class="fas fa-chart-bar"></i> Register
           </button>
         </li>
       </ul>
@@ -27,14 +27,36 @@
 </template>
 
 <script>
+import { isAdmin } from '@/utils/getAccTypes.js';
+
 export default {
+  data() {
+    return {
+      isAdminBool: false
+    };
+  },
   methods: {
     isCurrentPage(route) {
       return this.$route.path === route;
     },
+    async fetchAdminStatus() {
+      try {
+        this.isAdminBool = await isAdmin(); // Update isAdminBool based on the isAdmin function
+      } catch (error) {
+        console.error("Error fetching admin status:", error);
+      }
+    },
     goTo(route) {
       this.$router.push(route);
     }
+  },
+  computed: {
+    isAdmin() {
+      return this.isAdminBool; // Make the computed property use isAdminBool
+    }
+  },
+  created() {
+    this.fetchAdminStatus(); // Fetch the admin status when the component is created
   }
 };
 </script>

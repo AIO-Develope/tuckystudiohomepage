@@ -67,7 +67,6 @@ export default {
     async checkToken() {
       try {
         this.isLoggedIn = await verifyToken();
-        console.log(this.isLoggedIn);
 
         const usernameCookie = this.getCookie('username');
         if (usernameCookie) {

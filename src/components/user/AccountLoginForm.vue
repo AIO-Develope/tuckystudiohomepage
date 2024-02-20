@@ -107,6 +107,7 @@ export default {
       } else {
         document.cookie = `token=${result.token}; path=/`;
         document.cookie = `username=${this.username}; path=/`;
+
         this.error = '';
         this.success = 'Successfully logged in.';
         this.loggedIn = true;
