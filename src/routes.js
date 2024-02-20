@@ -2,7 +2,7 @@ import Home from './views/HomeView.vue';
 import Projects from './views/ProjectsView.vue';
 import LoginView from './views/user/LoginView.vue'
 import AccountHome from './views/user/AccountHome.vue'
-import AccountDashboard from './views/user/AccountDashboard.vue'
+import RegisterView from './views/user/RegisterView.vue'
 import AccountSidebar from './components/user/AccountSidebar'
 
 const routes = [
@@ -18,7 +18,7 @@ const routes = [
     children: [
       { path: '', redirect: 'home' },
       { path: 'home', component: AccountHome },
-      { path: 'dashboard', component: AccountDashboard }
+      { path: 'register', component: RegisterView }
     ]
   },
 ];

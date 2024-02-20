@@ -7,59 +7,54 @@
       </div>
       <hr>
       <ul class="nav flex-column">
-        <li class="nav-item">
-          <button @click="goTo('/account/home')" :class="{ active: isCurrentPage('/account/home') }">
-            <i class="fas fa-home"></i> Staff
-          </button>
-        </li>
-        <li class="nav-item" v-if="isAdminBool">
-          <button @click="goTo('/account/dashboard')" :class="{ active: isCurrentPage('/account/dashboard') }">
-            <i class="fas fa-chart-bar"></i> Register
+        <li v-for="(item, index) in filteredSidebarItems" :key="index" class="nav-item">
+          <button @click="goTo(item.route)" :class="{ active: isCurrentPage(item.route) }">
+            <i :class="item.icon"></i> {{ item.label }}
           </button>
         </li>
       </ul>
     </div>
 
-    <div class="content">
-      <router-view></router-view>
+    <div v-if="!requiresAdminForCurrentRoute || isAdmin" class="content">
+      <router-view v-if="!requiresAdminForCurrentRoute"></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import { isAdmin } from '@/utils/getAccTypes.js';
-
 export default {
   data() {
     return {
-      isAdminBool: false
+      sidebarItems: [
+        { label: 'Home', route: '/account/home', icon: 'fas fa-home', requiresAdmin: false },
+        { label: 'Register', route: '/account/register', icon: 'fas fa-chart-bar', requiresAdmin: true },
+        // Add more items here if needed
+      ],
+      isAdmin: false // Set this to true if user is an admin
     };
+  },
+  computed: {
+    filteredSidebarItems() {
+      return this.sidebarItems.filter(item => !item.requiresAdmin || this.isAdmin);
+    },
+    requiresAdminForCurrentRoute() {
+      const currentRoute = this.$route.path;
+      const currentItem = this.sidebarItems.find(item => item.route === currentRoute);
+      return currentItem ? currentItem.requiresAdmin : false;
+    }
   },
   methods: {
     isCurrentPage(route) {
       return this.$route.path === route;
     },
-    async fetchAdminStatus() {
-      try {
-        this.isAdminBool = await isAdmin(); // Update isAdminBool based on the isAdmin function
-      } catch (error) {
-        console.error("Error fetching admin status:", error);
-      }
-    },
     goTo(route) {
       this.$router.push(route);
     }
-  },
-  computed: {
-    isAdmin() {
-      return this.isAdminBool; // Make the computed property use isAdminBool
-    }
-  },
-  created() {
-    this.fetchAdminStatus(); // Fetch the admin status when the component is created
   }
 };
 </script>
+
+
 
 <style scoped>
 #app {
