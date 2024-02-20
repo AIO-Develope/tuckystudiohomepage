@@ -17,7 +17,7 @@
         </ul>
         <div v-if="isLoggedIn" class="col-md-3 text-end">
           <div class="dropdown">
-            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton"
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false">
               {{ username || 'Profile' }}
             </button>
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div v-else class="col-md-3 text-end">
-          <button type="button" class="btn btn-outline-info" @click="goToLogin">Login</button>
+          <button type="button" class="btn btn-outline-primary" @click="goToLogin">Login</button>
         </div>
       </header>
     </div>

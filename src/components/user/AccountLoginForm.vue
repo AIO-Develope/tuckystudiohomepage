@@ -67,37 +67,61 @@ export default {
       location.reload();
     },
     async login() {
-      try {
-        const response = await fetch(`${this.apiUrl}/auth/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: this.username,
-            password: this.password
-          })
-        });
-        const result = await response.json();
-        if (response.ok) {
-          document.cookie = `token=${result.token}; path=/`;
-          document.cookie = `username=${this.username}; path=/`;
+  try {
+    const response = await fetch(`${this.apiUrl}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.username,
+        password: this.password
+      })
+    });
+    const result = await response.json();
 
-          this.error = '';
-          this.success = 'Successfully logged in.';
-          this.loggedIn = true;
-          location.reload();
+    if (response.ok) {
+      if (result.tempPass) {
+        const newPassword = prompt("Please enter a new password:");
 
+        if (newPassword) {
+          const patchResponse = await fetch(`${this.apiUrl}/auth/edit`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `${result.token}`
+            },
+            body: JSON.stringify({
+              password: newPassword
+            })
+          });
 
+          if (patchResponse.ok) {
+            this.success = 'Password updated successfully.';
+          } else {
+            this.error = 'An error occurred while updating the password. Please try again later.';
+          }
         } else {
-          this.success = '';
-          this.error = result.message;
+          this.error = 'Password change canceled.';
         }
-      } catch (error) {
-        console.error('Error:', error);
-        this.error = 'An error occurred. Please try again later.';
+      } else {
+        document.cookie = `token=${result.token}; path=/`;
+        document.cookie = `username=${this.username}; path=/`;
+        this.error = '';
+        this.success = 'Successfully logged in.';
+        this.loggedIn = true;
+        location.reload();
       }
+    } else {
+      this.success = '';
+      this.error = result.message;
     }
+  } catch (error) {
+    console.error('Error:', error);
+    this.error = 'An error occurred. Please try again later.';
+  }
+}
+
 
 
 
