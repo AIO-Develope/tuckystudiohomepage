@@ -1,8 +1,8 @@
 
 import Home from './views/HomeView.vue';
 import Projects from './views/ProjectsView.vue';
-import LoginView from './views/admin/LoginView.vue'
-import AccountView from './views/admin/AccountView.vue'
+import LoginView from './views/user/LoginView.vue'
+import AccountView from './views/user/AccountView.vue'
 
 
 const routes = [
