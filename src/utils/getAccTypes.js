@@ -23,6 +23,7 @@ export async function isAdmin() {
       const result = await response.json();
 
       if (result.isAdmin) {
+        
         return true;
       } else {
 

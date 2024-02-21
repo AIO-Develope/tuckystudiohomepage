@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="d-flex flex-row" id="app">
     <!-- Sidebar -->
@@ -7,52 +9,101 @@
       </div>
       <hr>
       <ul class="nav flex-column">
-        <li v-for="(item, index) in filteredSidebarItems" :key="index" class="nav-item">
-          <button @click="goTo(item.route)" :class="{ active: isCurrentPage(item.route) }">
-            <i :class="item.icon"></i> {{ item.label }}
+        <li class="nav-item" v-for="route in filteredRoutes" :key="route.path">
+          <button @click="goTo(route.path)" :class="{ active: isCurrentPage(route.path) }">
+            <i class="fas" :class="route.icon"></i> {{ route.name }}
           </button>
         </li>
       </ul>
     </div>
 
-    <div v-if="!requiresAdminForCurrentRoute || isAdmin" class="content">
-      <router-view v-if="!requiresAdminForCurrentRoute"></router-view>
-    </div>
+    <div v-if="!requiresAdminForCurrentRoute() || isAdmin" class="content">
+  <router-view></router-view>
+</div>
+
+  
   </div>
 </template>
 
 <script>
+import config from '../../../config';
+
 export default {
   data() {
     return {
-      sidebarItems: [
-        { label: 'Home', route: '/account/home', icon: 'fas fa-home', requiresAdmin: false },
-        { label: 'Register', route: '/account/register', icon: 'fas fa-chart-bar', requiresAdmin: true },
-        // Add more items here if needed
-      ],
-      isAdmin: false // Set this to true if user is an admin
+      isAdmin: false,
+      routes: [
+        { path: '/account/home', name: 'Home', icon: 'fa-home', adminRequired: false },
+        { path: '/account/register', name: 'Dashboard', icon: 'fa-chart-bar', adminRequired: true }
+      ]
     };
   },
-  computed: {
-    filteredSidebarItems() {
-      return this.sidebarItems.filter(item => !item.requiresAdmin || this.isAdmin);
-    },
-    requiresAdminForCurrentRoute() {
-      const currentRoute = this.$route.path;
-      const currentItem = this.sidebarItems.find(item => item.route === currentRoute);
-      return currentItem ? currentItem.requiresAdmin : false;
-    }
+  created() {
+    this.checkAdminStatus();
   },
   methods: {
+    async checkAdminStatus() {
+      const token = this.getCookie("token");
+
+      if (!token) {
+        this.$router.push('/account/home');
+        return;
+      }
+
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", token);
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+
+      try {
+        const response = await fetch(`${config.apiUrl}/auth/getUserInformationsAuth`, requestOptions);
+        const result = await response.json();
+
+        this.isAdmin = result.isAdmin;
+      } catch (error) {
+        console.error(error);
+        this.isAdmin = false;
+      }
+
+      if (!this.isAdmin && this.requiresAdminForCurrentRoute()) {
+        this.$router.push('/account/home');
+      }
+    },
+    getCookie(name) {
+      const cookies = document.cookie.split(';');
+      for (let cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.split('=');
+        if (cookieName.trim() === name) {
+          return cookieValue;
+        }
+      }
+      return null;
+    },
     isCurrentPage(route) {
       return this.$route.path === route;
     },
     goTo(route) {
       this.$router.push(route);
+    },
+    requiresAdminForCurrentRoute() {
+      const currentRoute = this.$route.path;
+      const route = this.routes.find(route => route.path === currentRoute);
+      return route ? route.adminRequired : false;
+    }
+  },
+  computed: {
+    filteredRoutes() {
+      return this.routes.filter(route => !route.adminRequired || (route.adminRequired && this.isAdmin));
     }
   }
 };
 </script>
+
+
 
 
 
