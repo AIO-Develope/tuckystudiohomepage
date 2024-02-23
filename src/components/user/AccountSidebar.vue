@@ -35,7 +35,7 @@ export default {
       routes: [
         { path: '/account/home', name: 'Home', icon: 'fa-home', adminRequired: false },
         { path: '/account/register', name: 'Register', icon: 'fa-chart-bar', adminRequired: true },
-        { path: '/account/staff', name: 'Staff', icon: 'fa-chart-bar', adminRequired: true }
+        { path: '/account/staff', name: 'Staff', icon: 'fa-chart-bar', adminRequired: false }
 
       ]
     };
