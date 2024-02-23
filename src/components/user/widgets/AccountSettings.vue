@@ -49,6 +49,7 @@
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>
@@ -72,6 +73,7 @@
         </div>
       </div>
     </div>
+    
     </div>
   </template>
 
@@ -83,154 +85,155 @@ export default {
     data() {
         return {
             formData: {
-                firstName: '', // Placeholder for user's first name
-                lastName: '', // Placeholder for user's last name
-                username: '', // Placeholder for user's username
-                email: '', // Placeholder for user's email
-                password: '', // Placeholder for user's password
-                avatarFile: null // Placeholder for avatar file
+                firstName: '',
+                lastName: '',
+                username: '',
+                email: '',
+                password: '',
+                avatarFile: null
             }
         };
     },
     created() {
-        // Fetch user information when the component is created
         this.fetchUserInformation();
     },
     computed: {
-        // Compute the URL for the avatar preview
         avatarPreview() {
-            return this.formData.avatarFile ? URL.createObjectURL(this.formData.avatarFile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png';
+            if (this.formData.avatarFile) {
+                return URL.createObjectURL(this.formData.avatarFile);
+            } else {
+                return 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png';
+            }
         }
     },
     methods: {
         submitForm() {
-    // Check if any field has been modified
-    const isModified = Object.values(this.formData).some(value => value !== '');
+            const isModified = Object.values(this.formData).some(value => value !== '');
 
-    if (!isModified) {
-        console.log('No changes made.');
-        return;
-    }
+            if (!isModified) {
+                console.log('No changes made.');
+                return;
+            }
 
-    // Handle form submission here
-    console.log('Form submitted with data:', this.formData);
+            const formData = new FormData();
 
-    // Construct FormData object to include modified form data
-    const formData = new FormData();
+            if (this.formData.firstName.trim() !== '') {
+                formData.append('firstName', this.formData.firstName);
+            }
+            if (this.formData.lastName.trim() !== '') {
+                formData.append('lastName', this.formData.lastName);
+            }
+            if (this.formData.username.trim() !== '') {
+                formData.append('username', this.formData.username);
+            }
+            if (this.formData.email.trim() !== '') {
+                formData.append('email', this.formData.email);
+            }
+            if (this.formData.password.trim() !== '') {
+                formData.append('password', this.formData.password);
+            }
+            if (this.formData.avatarFile !== null) {
+                formData.append('profilePicture', this.formData.avatarFile);
+            }
 
-    // Append fields to formData if they are not empty
-    if (this.formData.firstName.trim() !== '') {
-        formData.append('firstName', this.formData.firstName);
-    }
-    if (this.formData.lastName.trim() !== '') {
-        formData.append('lastName', this.formData.lastName);
-    }
-    if (this.formData.username.trim() !== '') {
-        formData.append('username', this.formData.username);
-    }
-    if (this.formData.email.trim() !== '') {
-        formData.append('email', this.formData.email);
-    }
-    if (this.formData.password.trim() !== '') {
-        formData.append('password', this.formData.password);
-    }
-    if (this.formData.avatarFile !== null) {
-        formData.append('profilePicture', this.formData.avatarFile);
-    }
+            const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
 
-    // Retrieve the token from the local cookie
-    const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
+            if (!token) {
+                console.error('Token not found in cookies');
+                return;
+            }
 
-    // Make sure a token is found
-    if (!token) {
-        console.error('Token not found in cookies');
-        return;
-    }
+            const authToken = token.split('=')[1].trim();
 
-    // Extract the token value
-    const authToken = token.split('=')[1].trim();
-
-    // Make a POST request to update user information
-    fetch('http://localhost:3000/auth/edit', {
-        method: 'POST',
-        headers: {
-            'Authorization': `${authToken}`
+            fetch('http://localhost:3000/auth/edit', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${authToken}`
+                },
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('User information updated successfully:', data);
+                // Reset the form after successful submission
+                this.resetForm();
+            })
+            .catch(error => {
+                console.error('Error updating user information:', error);
+            });
         },
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('User information updated successfully:', data);
-    })
-    .catch(error => {
-        console.error('Error updating user information:', error);
-    });
-},
+        resetForm() {
+            // Reset all form fields and avatarFile
+            Object.assign(this.formData, {
+                firstName: '',
+                lastName: '',
+                username: '',
+                email: '',
+                password: '',
+                avatarFile: null
+            });
+            this.fetchUserInformation();
+        },
         handleFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
-                // Update the formData with the selected file
                 this.formData.avatarFile = file;
             }
         },
         openFileInput() {
-            // Trigger the click event of the file input field when clicking on the default avatar
             document.getElementById('avatar').click();
         },
         fetchUserInformation() {
-  // Retrieve the token from the local cookie
-  const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
+            const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
 
-  // Make sure a token is found
-  if (!token) {
-    console.error('Token not found in cookies');
-    return;
-  }
+            if (!token) {
+                console.error('Token not found in cookies');
+                return;
+            }
 
-  // Extract the token value
-  const authToken = token.split('=')[1].trim();
+            const authToken = token.split('=')[1].trim();
 
-  // Make a GET request to fetch user information
-  fetch('http://localhost:3000/auth/getUserInformationsAuth', {
-    headers: {
-      'Authorization': `${authToken}`
-    }
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Update formData with the fetched user information
-    this.formData.firstName = ''; // Clear previous data
-    this.formData.lastName = ''; // Clear previous data
-    this.formData.username = ''; // Clear previous data
-    this.formData.email = ''; // Clear previous data
+            fetch('http://localhost:3000/auth/getUserInformationsAuth', {
+                headers: {
+                    'Authorization': `${authToken}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                this.formData.firstName = '';
+                this.formData.lastName = '';
+                this.formData.username = '';
+                this.formData.email = '';
 
-    // Set placeholders for the input fields
-    document.getElementById('firstName').placeholder = data.firstName;
-    document.getElementById('lastName').placeholder = data.lastName;
-    document.getElementById('username').placeholder = data.username;
-    document.getElementById('email').placeholder = data.email;
+                document.getElementById('firstName').placeholder = data.firstName;
+                document.getElementById('lastName').placeholder = data.lastName;
+                document.getElementById('username').placeholder = data.username;
+                document.getElementById('email').placeholder = data.email;
 
-    // Set the profile picture directly
-    document.querySelector('.default-avatar img').src = data.profilePicture;
-  })
-  .catch(error => {
-    console.error('Error fetching user information:', error);
-  });
-}
-
+                if (data.profilePicture) {
+                    document.querySelector('.default-avatar img').src = data.profilePicture;
+                } else {
+                    document.querySelector('.default-avatar img').src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user information:', error);
+            });
+        }
     }
 };
 </script>
+
   
 <style scoped>
 .default-avatar {
