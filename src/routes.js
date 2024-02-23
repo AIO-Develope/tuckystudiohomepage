@@ -10,7 +10,6 @@ const routes = [
   { path: '/', component: Home },
   { path: '/projects', component: Projects },
   { path: '/login', component: LoginView},
-  { path: '/account', component: AccountHome},
 
   // users
   {
@@ -21,7 +20,6 @@ const routes = [
       { path: 'home', component: AccountHome },
       { path: 'register', component: RegisterView },
       { path: 'staff', component: StaffView }
-
     ]
   },
 ];

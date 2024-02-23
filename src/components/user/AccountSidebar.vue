@@ -45,36 +45,37 @@ export default {
   },
   methods: {
     async checkAdminStatus() {
-      const token = this.getCookie("token");
+  const token = this.getCookie("token");
 
-      if (!token) {
-        this.$router.push('/account/home');
-        return;
-      }
+  if (!token) {
+    this.$router.push('/login'); // Redirect to login if token doesn't exist
+    return;
+  }
 
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", token);
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", token);
 
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow"
-      };
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
 
-      try {
-        const response = await fetch(`${config.apiUrl}/auth/getUserInformationsAuth`, requestOptions);
-        const result = await response.json();
+  try {
+    const response = await fetch(`${config.apiUrl}/auth/getUserInformationsAuth`, requestOptions);
+    const result = await response.json();
 
-        this.isAdmin = result.isAdmin;
-      } catch (error) {
-        console.error(error);
-        this.isAdmin = false;
-      }
+    this.isAdmin = result.isAdmin;
+  } catch (error) {
+    console.error(error);
+    this.isAdmin = false;
+  }
 
-      if (!this.isAdmin && this.requiresAdminForCurrentRoute()) {
-        this.$router.push('/account/home');
-      }
-    },
+  if (!this.isAdmin && this.requiresAdminForCurrentRoute()) {
+    this.$router.push('/account/home');
+  }
+},
+
     getCookie(name) {
       const cookies = document.cookie.split(';');
       for (let cookie of cookies) {
