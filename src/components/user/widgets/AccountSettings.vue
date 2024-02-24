@@ -81,6 +81,8 @@
 
   
 <script>
+import config from '../../../../config';
+
 export default {
     data() {
         return {
@@ -148,7 +150,7 @@ export default {
     const authToken = token.split('=')[1].trim();
 
     try {
-        const response = await fetch('http://localhost:3000/auth/edit', {
+        const response = await fetch(`${config.apiUrl}/auth/edit`, {
             method: 'POST',
             headers: {
                 'Authorization': `${authToken}`
@@ -222,7 +224,7 @@ export default {
 
             const authToken = token.split('=')[1].trim();
 
-            fetch('http://localhost:3000/auth/getUserInformationsAuth', {
+            fetch(`${config.apiUrl}/auth/getUserInformationsAuth`, {
                 headers: {
                     'Authorization': `${authToken}`
                 }

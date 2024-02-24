@@ -37,7 +37,7 @@
 
 <script>
 import { isAdmin } from '../../../utils/getAccTypes';
-
+import config from '../../../../config';
 export default {
   data() {
     return {
@@ -61,7 +61,7 @@ export default {
     fetchUsers() {
       this.isLoading = true;
       const token = this.getCookie("token");
-      fetch("http://localhost:3000/auth/staff", {
+      fetch(`${config.apiUrl}/auth/staff`, {
         headers: {
           Authorization: `${token}`
         }
@@ -91,7 +91,7 @@ export default {
     deleteUser(user) {
   if (confirm(`Are you sure you want to delete ${user.username}?`)) {
     const token = this.getCookie("token");
-    fetch(`http://localhost:3000/admin/user/delete/${user.uuid}`, {
+    fetch(`${config.apiUrl}/admin/user/delete/${user.uuid}`, {
       method: 'DELETE',
       headers: {
         Authorization: token
