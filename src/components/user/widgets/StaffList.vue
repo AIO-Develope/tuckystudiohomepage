@@ -1,7 +1,10 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="container">
+    <input type="text" v-model="searchQuery" placeholder="Search users..." class="form-control mb-3">
+
     <div class="row">
+      
       <!-- Loading Indicator -->
       <div v-if="isLoading" class="col-md-12 text-center">
        
@@ -13,7 +16,7 @@
       </div>
 
       <!-- User Cards -->
-      <div v-else class="col-md-4" v-for="(user, index) in users" :key="index">
+      <div v-else class="col-md-4" v-for="(user, index) in filteredUsers" :key="index">
         <div class="card mb-4" v-bind:class="{ 'animated-card': animateCards }" v-bind:style="{ 'animation-delay': index * 0.1 + 's' }">
           <div class="card-body d-flex flex-column">
             <div class="d-flex justify-content-between align-items-start mb-3">
@@ -46,13 +49,26 @@ export default {
       error: null,
       animateCards: false,
       isAdmin: false,
-      username: null
+      username: null,
+      searchQuery: ''
+
     };
   },
   mounted() {
     this.checkAdmin();
     this.fetchUsers();
     this.username = this.getCookie("username");
+  },
+  computed: {
+    filteredUsers() {
+      return this.users.filter(user => {
+        const fullName = user.fullName.toLowerCase();
+        const username = user.username.toLowerCase();
+        const email = user.email.toLowerCase();
+        const query = this.searchQuery.toLowerCase();
+        return fullName.includes(query) || username.includes(query) || email.includes(query);
+      });
+    }
   },
   methods: {
     async checkAdmin() {

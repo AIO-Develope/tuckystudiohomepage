@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { verifyToken } from '@/utils/authVerify';
+
 import config from '../../../config';
 
 export default {
@@ -42,9 +44,43 @@ export default {
     };
   },
   created() {
+    this.checkTokenAndUsername();
+
     this.checkAdminStatus();
+
   },
   methods: {
+    async logout() {
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+      this.isLoggedIn = false;
+      this.username = '';
+      this.$router.push('/login');
+
+    },
+
+
+    async checkTokenAndUsername() {
+    try {
+      this.isLoggedIn = await verifyToken();
+
+      const usernameCookie = this.getCookie('username');
+      const tokenCookie = this.getCookie('token');
+
+      if (!usernameCookie || !tokenCookie) {
+        await this.logout();
+        return;
+      }
+
+      if (usernameCookie) {
+        this.username = usernameCookie;
+      }
+    } catch (error) {
+      console.error('Error verifying token:', error);
+    }
+  },
+
     async checkAdminStatus() {
   const token = this.getCookie("token");
 
