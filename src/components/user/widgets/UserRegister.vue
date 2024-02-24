@@ -52,6 +52,7 @@ import config from '../../../../config';
 export default {
   data() {
     return {
+      
       username: '',
       password: '',
       error: '',

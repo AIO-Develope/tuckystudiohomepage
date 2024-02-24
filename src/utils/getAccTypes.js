@@ -21,7 +21,6 @@ export async function isAdmin() {
       const response = await fetch(`${config.apiUrl}/auth/getUserInformationsAuth`, requestOptions);
 
       const result = await response.json();
-
       if (result.isAdmin) {
         
         return true;

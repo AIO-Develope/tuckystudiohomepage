@@ -1,6 +1,7 @@
 
 
 <template>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="d-flex flex-row" id="app">
     <!-- Sidebar -->
     <div class="sidebar">
@@ -33,9 +34,9 @@ export default {
     return {
       isAdmin: false,
       routes: [
-        { path: '/account/home', name: 'Home', icon: 'fa-home', adminRequired: false },
-        { path: '/account/register', name: 'Register', icon: 'fa-chart-bar', adminRequired: true },
-        { path: '/account/staff', name: 'Staff', icon: 'fa-chart-bar', adminRequired: false }
+        { path: '/account/home', name: 'Home', icon: 'fa fa-home', adminRequired: false },
+        { path: '/account/register', name: 'Register', icon: 'fa fa-id-card', adminRequired: true },
+        { path: '/account/staff', name: 'Staff', icon: 'fa fa-user', adminRequired: false }
 
       ]
     };
@@ -123,7 +124,7 @@ export default {
   flex-direction: row;
 }
 .sidebar {
-  width: 280px;
+  width: 290px;
   margin-right: 20px;
   background-color: #f0f0f0;
   padding: 20px;
