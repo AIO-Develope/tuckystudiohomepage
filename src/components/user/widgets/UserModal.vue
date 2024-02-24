@@ -1,66 +1,91 @@
 <template>
     <div class="modal-overlay" @click="$emit('close')">
-      <div class="modal-container" @click.stop>
-        <div class="modal-header">
-          <h2>Edit User</h2>
-          <button class="close-btn" @click="$emit('close')">×</button>
+        <div class="modal-container" @click.stop>
+            <div class="modal-header">
+                <h2>Edit User</h2>
+                <button class="close-btn" @click="$emit('close')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form @submit.prevent="saveChanges">
+                    <div class="form-group">
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" id="fullName" v-model="editedUser.fullName" class="form-control" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" v-model="editedUser.username" class="form-control" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" v-model="editedUser.email" class="form-control" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="roles">Roles:</label>
+                        <div class="roles-container">
+                            <div v-for="(role, index) in editedUser.roles" :key="index" class="badge">
+                                <span>{{ role }}</span>
+                                <button type="button" @click="removeRole(index)" class="remove-btn">×</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group preset-role-container">
+                        <select v-model="selectedRole" id="presetRole" class="form-control">
+                            <option value="" disabled>Select a role</option>
+                            <option v-for="role in presetRoles" :key="role" :value="role">{{ role }}</option>
+                        </select>
+                        <button type="button" @click="addPresetRole" class="add-role-btn">Add Role</button>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <form @submit.prevent="saveChanges">
-            <div class="form-group">
-              <label for="fullName">Full Name:</label>
-              <input type="text" id="fullName" v-model="editedUser.fullName" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="username">Username:</label>
-              <input type="text" id="username" v-model="editedUser.username" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" v-model="editedUser.email" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="roles">Roles:</label>
-              <input type="text" id="roles" v-model="editedUser.roles" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  export default {
+<script>
+export default {
     props: {
-      user: {
-        type: Object,
-        required: true
-      }
+        user: {
+            type: Object,
+            required: true
+        }
     },
     data() {
-      return {
-        editedUser: {
-          fullName: this.user.fullName,
-          username: this.user.username,
-          email: this.user.email,
-          roles: this.user.roles.join(', ')
-        }
-      };
+        return {
+            editedUser: {
+                fullName: this.user.fullName,
+                username: this.user.username,
+                email: this.user.email,
+                uuid: this.user.uuid,
+                roles: this.user.roles.slice(),
+            },
+            presetRoles: ['Admin', 'Moderator', 'User', 'Viewer'],
+            selectedRole: ''
+        };
     },
     methods: {
-      saveChanges() {
-        // Emit an event to send edited user data to parent component
-        this.$emit('save', this.editedUser);
-        // Close the modal
-        this.$emit('close');
-      }
+        saveChanges() {
+            this.$emit('save', this.editedUser);
+
+            // Close the modal
+            this.$emit('close');
+        },
+        removeRole(index) {
+            this.editedUser.roles.splice(index, 1);
+        },
+        addPresetRole() {
+            if (this.selectedRole && !this.editedUser.roles.includes(this.selectedRole)) {
+                this.editedUser.roles.push(this.selectedRole);
+            }
+        }
     }
-  };
-  </script>
+};
+</script>
   
-  <style scoped>
-  .modal-overlay {
+  
+<style scoped>
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -70,70 +95,113 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal-container {
+    z-index: 1001;
+}
+
+.modal-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 400px;
-  }
-  
-  .modal-header {
+}
+
+.modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-  }
-  
-  .modal-header h2 {
+}
+
+.modal-header h2 {
     margin: 0;
-  }
-  
-  .close-btn {
+}
+
+.close-btn {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 20px;
-  }
-  
-  .modal-body {
+}
+
+.modal-body {
     padding: 20px 0;
-  }
-  
-  .form-group {
+}
+
+.form-group {
     margin-bottom: 20px;
-  }
-  
-  label {
+}
+
+label {
     font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="email"] {
+}
+
+input[type="text"],
+input[type="email"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-  }
-  
-  .btn {
+}
+
+.btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
     background-color: #007bff;
     color: #fff;
-    cursor: pointer;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-  }
-  
-  .btn-primary:hover {
+}
+
+.btn-primary:hover {
     background-color: #0056b3;
-  }
-  </style>
-  
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 0.875rem;
+    margin-right: 0.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.preset-role-container {
+    display: flex;
+    align-items: center;
+}
+
+.preset-role-container select {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.add-role-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-role-btn:hover {
+    background-color: #218838;
+}
+</style>

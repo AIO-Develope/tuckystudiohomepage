@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-  <UserModal v-if="isModalOpen" :user="currentUserForEdit" @close="isModalOpen = false" />
+  <UserModal v-if="isModalOpen" :user="currentUserForEdit" @save="handleSave" @close="isModalOpen = false" />
 
 </template>
 
@@ -93,6 +93,10 @@ export default {
     }
   },
   methods: {
+    handleSave(savedUserData) {
+    console.log('Saved user data:', savedUserData.roles);
+    // Handle the saved user data as needed
+  },
     openEditModal(user) {
       this.currentUserForEdit = user;
       this.isModalOpen = true;
