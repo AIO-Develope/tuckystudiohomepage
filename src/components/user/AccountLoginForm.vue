@@ -86,7 +86,7 @@ export default {
 
         if (newPassword) {
           const patchResponse = await fetch(`${this.apiUrl}/auth/edit`, {
-            method: 'PATCH',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `${result.token}`

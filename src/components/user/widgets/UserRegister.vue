@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5 ">
     <div class="register-form">
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -52,6 +52,7 @@ import config from '../../../../config';
 export default {
   data() {
     return {
+      
       username: '',
       password: '',
       error: '',
@@ -61,9 +62,7 @@ export default {
       setPassword: false
     };
   },
-  async mounted() {
-    // Any initialization logic
-  },
+  
   methods: {
     async register() {
       let endpoint;

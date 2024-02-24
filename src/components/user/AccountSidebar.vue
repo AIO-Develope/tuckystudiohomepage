@@ -1,6 +1,7 @@
 
 
 <template>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="d-flex flex-row" id="app">
     <!-- Sidebar -->
     <div class="sidebar">
@@ -33,8 +34,10 @@ export default {
     return {
       isAdmin: false,
       routes: [
-        { path: '/account/home', name: 'Home', icon: 'fa-home', adminRequired: false },
-        { path: '/account/register', name: 'Register', icon: 'fa-chart-bar', adminRequired: true }
+        { path: '/account/home', name: 'Home', icon: 'fa fa-home', adminRequired: false },
+        { path: '/account/register', name: 'Register', icon: 'fa fa-id-card', adminRequired: true },
+        { path: '/account/staff', name: 'Staff', icon: 'fa fa-user', adminRequired: false }
+
       ]
     };
   },
@@ -43,36 +46,37 @@ export default {
   },
   methods: {
     async checkAdminStatus() {
-      const token = this.getCookie("token");
+  const token = this.getCookie("token");
 
-      if (!token) {
-        this.$router.push('/account/home');
-        return;
-      }
+  if (!token) {
+    this.$router.push('/login');
+    return;
+  }
 
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", token);
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", token);
 
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow"
-      };
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
 
-      try {
-        const response = await fetch(`${config.apiUrl}/auth/getUserInformationsAuth`, requestOptions);
-        const result = await response.json();
+  try {
+    const response = await fetch(`${config.apiUrl}/auth/getUserInformationsAuth`, requestOptions);
+    const result = await response.json();
 
-        this.isAdmin = result.isAdmin;
-      } catch (error) {
-        console.error(error);
-        this.isAdmin = false;
-      }
+    this.isAdmin = result.isAdmin;
+  } catch (error) {
+    console.error(error);
+    this.isAdmin = false;
+  }
 
-      if (!this.isAdmin && this.requiresAdminForCurrentRoute()) {
-        this.$router.push('/account/home');
-      }
-    },
+  if (!this.isAdmin && this.requiresAdminForCurrentRoute()) {
+    this.$router.push('/account/home');
+  }
+},
+
     getCookie(name) {
       const cookies = document.cookie.split(';');
       for (let cookie of cookies) {
@@ -120,7 +124,7 @@ export default {
   flex-direction: row;
 }
 .sidebar {
-  width: 280px;
+  width: 290px;
   margin-right: 20px;
   background-color: #f0f0f0;
   padding: 20px;
