@@ -62,9 +62,7 @@ export default {
       setPassword: false
     };
   },
-  async mounted() {
-    // Any initialization logic
-  },
+  
   methods: {
     async register() {
       let endpoint;

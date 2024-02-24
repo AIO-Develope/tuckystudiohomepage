@@ -92,8 +92,8 @@ export default {
                 password: '',
                 avatarFile: null
             },
-            error: '', // Added error property
-            success: '' // Added success property
+            error: '',
+            success: ''
         };
     },
     created() {
@@ -185,7 +185,6 @@ export default {
 },
 
         resetForm() {
-            // Reset all form fields and avatarFile
             Object.assign(this.formData, {
                 firstName: '',
                 lastName: '',

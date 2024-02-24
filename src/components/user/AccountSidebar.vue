@@ -49,7 +49,7 @@ export default {
   const token = this.getCookie("token");
 
   if (!token) {
-    this.$router.push('/login'); // Redirect to login if token doesn't exist
+    this.$router.push('/login');
     return;
   }
 

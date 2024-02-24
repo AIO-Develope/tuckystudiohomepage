@@ -19,8 +19,9 @@
             <div class="d-flex justify-content-between align-items-start mb-3">
               <img :src="user.profilePicture" alt="Profile Picture" class="profile-picture">
               <!-- Delete Button -->
-              <button v-if="isAdmin && user.username !== username" @click="deleteUser(user)" class="btn btn-danger align-self-start"><i class="fa fa-trash-o"></i></button>
-            </div>
+              <button v-if="isAdmin && user.username !== username" @click="deleteUser(user)" class="delete-button">
+  <i class="fa fa-trash-o"></i>
+</button>            </div>
             <div>
               <h5 class="card-title mb-1">{{ user.fullName }}</h5>
               <p class="card-text mb-1">@{{ user.username }}</p>
@@ -51,7 +52,7 @@ export default {
   mounted() {
     this.checkAdmin();
     this.fetchUsers();
-    this.username = this.getCookie("username"); // Get and store the local cookie "username"
+    this.username = this.getCookie("username");
   },
   methods: {
     async checkAdmin() {
@@ -88,7 +89,6 @@ export default {
       if (parts.length === 2) return parts.pop().split(';').shift();
     },
     deleteUser(user) {
-  // Ask for confirmation before deleting the user
   if (confirm(`Are you sure you want to delete ${user.username}?`)) {
     const token = this.getCookie("token");
     fetch(`http://localhost:3000/admin/user/delete/${user.uuid}`, {
@@ -99,7 +99,6 @@ export default {
     })
     .then(response => {
       if (response.ok) {
-        // Remove the user from the users array
         this.users = this.users.filter(u => u.uuid !== user.uuid);
         console.log('User deleted successfully.');
       } else {
@@ -122,29 +121,29 @@ export default {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  margin-right: auto; /* Pushes the image to the left */
+  margin-right: auto;
 }
 
 .card {
-  width: 300px; /* Increased width for the cards */
-  height: 220px; /* Fixed height for the cards */
-  margin: 10px; /* Margin between the cards */
-  overflow: hidden; /* Hide overflowing text */
+  width: 300px;
+  height: 220px;
+  margin: 10px;
+  overflow: hidden;
 }
 
 .card-body {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  height: 100%; /* Ensure the card body takes full height of its container */
+  height: 100%;
 }
 
 .card-title,
 .card-text {
   margin-bottom: 0.3rem;
-  white-space: nowrap; /* Prevent text from wrapping to new line */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Display ellipsis (...) for overflowed text */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @keyframes fadeIn {
@@ -164,12 +163,12 @@ export default {
 
 .row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid layout with increased min width */
-  grid-gap: 5px; /* Gap between the cards */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 5px;
 }
 
 .col-md-4 {
-  flex: 1; /* Make sure each card occupies equal space */
+  flex: 1;
 }
 
 .card {
@@ -178,5 +177,15 @@ export default {
 
 
   
+  .delete-button {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
+.delete-button:hover {
+  color: #dc3545;
+}
 </style>
