@@ -48,7 +48,7 @@ export default {
     };
   },
   created() {
-    this.checkToken();
+    this.checkTokenAndUsername();
   },
   methods: {
 
@@ -64,18 +64,25 @@ export default {
     },
 
 
-    async checkToken() {
-      try {
-        this.isLoggedIn = await verifyToken();
+    async checkTokenAndUsername() {
+    try {
+      this.isLoggedIn = await verifyToken();
 
-        const usernameCookie = this.getCookie('username');
-        if (usernameCookie) {
-          this.username = usernameCookie;
-        }
-      } catch (error) {
-        console.error('Error verifying token:', error);
+      const usernameCookie = this.getCookie('username');
+      const tokenCookie = this.getCookie('token');
+
+      if (!usernameCookie || !tokenCookie) {
+        await this.logout();
+        return;
       }
-    },
+
+      if (usernameCookie) {
+        this.username = usernameCookie;
+      }
+    } catch (error) {
+      console.error('Error verifying token:', error);
+    }
+  },
     goToLogin() {
       this.$router.push('/login');
     },
