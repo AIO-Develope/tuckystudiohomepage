@@ -1,13 +1,16 @@
 <template>
+  <!-- eslint-disable -->
+  
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="container">
     <input type="text" v-model="searchQuery" placeholder="Search users..." class="form-control mb-3">
 
     <div class="row">
-      
+
       <!-- Loading Indicator -->
       <div v-if="isLoading" class="col-md-12 text-center">
-       
+
       </div>
 
       <!-- Error Handling -->
@@ -17,31 +20,48 @@
 
       <!-- User Cards -->
       <div v-else class="col-md-4" v-for="(user, index) in filteredUsers" :key="index">
-        <div class="card mb-4" v-bind:class="{ 'animated-card': animateCards }" v-bind:style="{ 'animation-delay': index * 0.1 + 's' }">
+        <div class="card mb-4" v-bind:class="{ 'animated-card': animateCards }"
+          v-bind:style="{ 'animation-delay': index * 0.1 + 's' }">
           <div class="card-body d-flex flex-column">
             <div class="d-flex justify-content-between align-items-start mb-3">
               <img :src="user.profilePicture" alt="Profile Picture" class="profile-picture">
               <!-- Delete Button -->
               <button v-if="isAdmin && user.username !== username" @click="deleteUser(user)" class="delete-button">
-  <i class="fa fa-trash-o"></i>
-</button>            </div>
+                <i class="fa fa-trash-o"></i>
+              </button>
+              <button v-if="isAdmin" @click="openEditModal(user)" class="edit-button">
+                <i class="fa fa-pencil"></i>
+              </button>
+            </div>
             <div>
               <h5 class="card-title mb-1">{{ user.fullName }}</h5>
               <p class="card-text mb-1">@{{ user.username }}</p>
+
               <p class="card-text mb-0">{{ user.email }}</p>
+              <div class="roles-container">
+                <span v-for="(role, roleIndex) in user.roles" :key="roleIndex" class="badge">{{ role }}</span>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <UserModal v-if="isModalOpen" :user="currentUserForEdit" @close="isModalOpen = false" />
+
 </template>
 
 
 <script>
+import UserModal from './UserModal.vue'; // import your modal component
+
 import { isAdmin } from '../../../utils/getAccTypes';
 import config from '../../../../config';
 export default {
+  components: {
+    UserModal
+  },
   data() {
     return {
       users: [],
@@ -50,7 +70,9 @@ export default {
       animateCards: false,
       isAdmin: false,
       username: null,
-      searchQuery: ''
+      searchQuery: '',
+      isModalOpen: false,
+      currentUserForEdit: null
 
     };
   },
@@ -71,6 +93,10 @@ export default {
     }
   },
   methods: {
+    openEditModal(user) {
+      this.currentUserForEdit = user;
+      this.isModalOpen = true;
+    },
     async checkAdmin() {
       this.isAdmin = await isAdmin();
     },
@@ -105,27 +131,27 @@ export default {
       if (parts.length === 2) return parts.pop().split(';').shift();
     },
     deleteUser(user) {
-  if (confirm(`Are you sure you want to delete ${user.username}?`)) {
-    const token = this.getCookie("token");
-    fetch(`${config.apiUrl}/admin/user/delete/${user.uuid}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: token
+      if (confirm(`Are you sure you want to delete ${user.username}?`)) {
+        const token = this.getCookie("token");
+        fetch(`${config.apiUrl}/admin/user/delete/${user.uuid}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: token
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              this.users = this.users.filter(u => u.uuid !== user.uuid);
+              console.log('User deleted successfully.');
+            } else {
+              throw new Error('Failed to delete user');
+            }
+          })
+          .catch(error => {
+            console.error('Error deleting user:', error);
+          });
       }
-    })
-    .then(response => {
-      if (response.ok) {
-        this.users = this.users.filter(u => u.uuid !== user.uuid);
-        console.log('User deleted successfully.');
-      } else {
-        throw new Error('Failed to delete user');
-      }
-    })
-    .catch(error => {
-      console.error('Error deleting user:', error);
-    });
-  }
-}
+    }
 
   }
 
@@ -140,9 +166,29 @@ export default {
   margin-right: auto;
 }
 
+.roles-container {
+  margin-top: 0.5rem;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 300px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 0.875rem;
+  margin-right: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .card {
   width: 300px;
-  height: 220px;
+  height: 245px;
   margin: 10px;
   overflow: hidden;
 }
@@ -167,6 +213,7 @@ export default {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -188,12 +235,12 @@ export default {
 }
 
 .card {
-    opacity: 0;
-  }
+  opacity: 0;
+}
 
 
-  
-  .delete-button {
+
+.delete-button {
   padding: 5px;
   background-color: transparent;
   border: none;
@@ -201,7 +248,20 @@ export default {
   transition: color 0.3s;
 }
 
+.edit-button {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+
 .delete-button:hover {
   color: #dc3545;
+}
+
+.edit-button:hover {
+  color: #0051ff;
 }
 </style>
