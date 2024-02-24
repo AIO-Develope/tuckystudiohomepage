@@ -88,27 +88,32 @@ export default {
       if (parts.length === 2) return parts.pop().split(';').shift();
     },
     deleteUser(user) {
-      const token = this.getCookie("token");
-      fetch(`http://localhost:3000/admin/user/delete/${user.uuid}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: token
-        }
-      })
-      .then(response => {
-        if (response.ok) {
-          // Remove the user from the users array
-          this.users = this.users.filter(u => u.uuid !== user.uuid);
-          console.log('User deleted successfully.');
-        } else {
-          throw new Error('Failed to delete user');
-        }
-      })
-      .catch(error => {
-        console.error('Error deleting user:', error);
-      });
-    }
+  // Ask for confirmation before deleting the user
+  if (confirm(`Are you sure you want to delete ${user.username}?`)) {
+    const token = this.getCookie("token");
+    fetch(`http://localhost:3000/admin/user/delete/${user.uuid}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: token
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Remove the user from the users array
+        this.users = this.users.filter(u => u.uuid !== user.uuid);
+        console.log('User deleted successfully.');
+      } else {
+        throw new Error('Failed to delete user');
+      }
+    })
+    .catch(error => {
+      console.error('Error deleting user:', error);
+    });
   }
+}
+
+  }
+
 };
 </script>
 
