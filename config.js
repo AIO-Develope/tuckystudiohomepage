@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: "https://api.aio.web.xyz"
+    apiUrl: "https://api.aio-web.xyz"
   };
   
   export default config;
