@@ -93,39 +93,38 @@ export default {
   },
   methods: {
     handleSave(savedUserData) {
-  const roleUUIDs = savedUserData.roles.map(role => role.id); // Assuming role.id is the UUID
-  const userDataWithRoleUUIDs = {
-    roles: roleUUIDs
-  };
+      const roleUUIDs = savedUserData.roles.map(role => role.id);
+      const userDataWithRoleUUIDs = {
+        roles: roleUUIDs
+      };
 
-  const token = this.getCookie("token");
+      const token = this.getCookie("token");
 
-  fetch(`${config.apiUrl}/admin/user/edit/${savedUserData.uuid}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `${token}`
+      fetch(`${config.apiUrl}/admin/user/edit/${savedUserData.uuid}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`
+        },
+        body: JSON.stringify(userDataWithRoleUUIDs)
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+
+
+      this.$emit('close');
+      setTimeout(this.fetchUsers, 400);
+
     },
-    body: JSON.stringify(userDataWithRoleUUIDs)
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    
-    .catch(error => {
-      console.error('Error:', error);
-    });
-
-  // Emit the user data with role UUIDs
-  // Close the modal
-
-  this.$emit('close');
-  setTimeout(this.fetchUsers, 400);
-
-},
 
     openEditModal(user) {
       this.currentUserForEdit = user;
