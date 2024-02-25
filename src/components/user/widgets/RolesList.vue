@@ -118,6 +118,8 @@ export default {
 </script>
   
 <style scoped>
-/* Add your CSS styles here */
+.container{
+    margin-top: 50px;
+}
 </style>
   
