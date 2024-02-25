@@ -44,6 +44,8 @@
 </template>
   
 <script>
+import config from '../../../../config';
+
 export default {
     props: {
         user: {
@@ -70,7 +72,7 @@ export default {
     methods: {
         async fetchPresetRoles() {
             try {
-                const response = await fetch('http://localhost:3000/admin/roles', {
+                const response = await fetch(`${config.apiUrl}/admin/roles`, {
                     headers: {
                         'Authorization': `${this.getCookie('token')}`
                     }

@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: "http://localhost:3000"
+    apiUrl: "https://api.aio.web.xyz"
   };
   
   export default config;

@@ -98,7 +98,7 @@ export default {
     roles: roleUUIDs
   };
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxNjc2YWJiZS04OGM4LTRhMWYtODhjYi00YzRiMmJhNzU4NWMiLCJpYXQiOjE3MDg4MTI1MTl9.1jP_hA5X7hQOvwKBZsKOK_5VxwOTojiJeZLJo0E6728';
+  const token = this.getCookie("token");
 
   fetch(`${config.apiUrl}/admin/user/edit/${savedUserData.uuid}`, {
     method: 'PATCH',
