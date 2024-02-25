@@ -23,7 +23,7 @@
                         <label for="roles">Roles:</label>
                         <div class="roles-container">
                             <div v-for="(role, index) in editedUser.roles" :key="index" class="badge">
-                                <span>{{ role }}</span>
+                                <span>{{ role.roleName }}</span>
                                 <button type="button" @click="removeRole(index)" class="remove-btn">×</button>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                     <div class="form-group preset-role-container">
                         <select v-model="selectedRole" id="presetRole" class="form-control">
                             <option value="" disabled>Select a role</option>
-                            <option v-for="role in presetRoles" :key="role" :value="role">{{ role }}</option>
+                            <option v-for="role in presetRoles" :key="role" :value="role">{{ role.roleName }}</option>
                         </select>
                         <button type="button" @click="addPresetRole" class="add-role-btn">Add Role</button>
                     </div>
@@ -60,28 +60,75 @@ export default {
                 uuid: this.user.uuid,
                 roles: this.user.roles.slice(),
             },
-            presetRoles: ['Admin', 'Moderator', 'User', 'Viewer'],
+            presetRoles: [],
             selectedRole: ''
         };
     },
+    created() {
+        this.fetchPresetRoles();
+    },
     methods: {
-        saveChanges() {
-            this.$emit('save', this.editedUser);
+        async fetchPresetRoles() {
+            try {
+                const response = await fetch('http://localhost:3000/admin/roles', {
+                    headers: {
+                        'Authorization': `${this.getCookie('token')}`
+                    }
+                });
 
-            // Close the modal
-            this.$emit('close');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch roles');
+                }
+
+                const responseData = await response.json();
+
+                // Check if the key "allRoles" exists in the response data
+                if ('allRoles' in responseData) {
+                    // Access the array of roles under the key "allRoles" and map over it
+                    this.presetRoles = responseData.allRoles.map(role => ({
+                        id: role.id,
+                        roleName: role.roleName
+                    }));
+                } else {
+                    console.error('Invalid data format. Expected "allRoles" key.');
+                }
+            } catch (error) {
+                console.error('Error fetching preset roles:', error);
+            }
         },
+
+
+
+
+
+
+
+        saveChanges() {
+    // Emit the save event with the updated user data, including the UUID
+    this.$emit('save', { ...this.editedUser });
+
+    // Close the modal
+    this.$emit('close');
+},
+
         removeRole(index) {
             this.editedUser.roles.splice(index, 1);
         },
         addPresetRole() {
-            if (this.selectedRole && !this.editedUser.roles.includes(this.selectedRole)) {
-                this.editedUser.roles.push(this.selectedRole);
-            }
+    if (this.selectedRole && !this.editedUser.roles.some(role => role.id === this.selectedRole.id)) {
+        this.editedUser.roles.push(this.selectedRole);
+    }
+},
+
+        getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
         }
     }
 };
 </script>
+
   
   
 <style scoped>

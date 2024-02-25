@@ -1,7 +1,7 @@
 <template>
   <!-- eslint-disable -->
-  
-  
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="container">
     <input type="text" v-model="searchQuery" placeholder="Search users..." class="form-control mb-3">
@@ -39,7 +39,7 @@
 
               <p class="card-text mb-0">{{ user.email }}</p>
               <div class="roles-container">
-                <span v-for="(role, roleIndex) in user.roles" :key="roleIndex" class="badge">{{ role }}</span>
+                <span v-for="(role, roleIndex) in user.roles" :key="roleIndex" class="badge">{{ role.roleName }}</span>
               </div>
 
             </div>
@@ -49,7 +49,6 @@
     </div>
   </div>
   <UserModal v-if="isModalOpen" :user="currentUserForEdit" @save="handleSave" @close="isModalOpen = false" />
-
 </template>
 
 
@@ -94,9 +93,40 @@ export default {
   },
   methods: {
     handleSave(savedUserData) {
-    console.log('Saved user data:', savedUserData.roles);
-    // Handle the saved user data as needed
-  },
+  const roleUUIDs = savedUserData.roles.map(role => role.id); // Assuming role.id is the UUID
+  const userDataWithRoleUUIDs = {
+    roles: roleUUIDs
+  };
+
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxNjc2YWJiZS04OGM4LTRhMWYtODhjYi00YzRiMmJhNzU4NWMiLCJpYXQiOjE3MDg4MTI1MTl9.1jP_hA5X7hQOvwKBZsKOK_5VxwOTojiJeZLJo0E6728';
+
+  fetch(`${config.apiUrl}/admin/user/edit/${savedUserData.uuid}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    },
+    body: JSON.stringify(userDataWithRoleUUIDs)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  // Emit the user data with role UUIDs
+  // Close the modal
+
+  this.$emit('close');
+  setTimeout(this.fetchUsers, 400);
+
+},
+
     openEditModal(user) {
       this.currentUserForEdit = user;
       this.isModalOpen = true;
