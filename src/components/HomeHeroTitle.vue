@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-md-4">
-          <img src="@/assets/tucky_logo.webp" class="img-fluid hero-image" alt="hero banner">
+          <img src="@/assets/tucky_logo.png" class="img-fluid hero-image" alt="hero banner">
         </div>
         <div class="col-md-5">
           <div class="hero-content">
@@ -68,6 +68,7 @@
   width: 100%;
   max-width: 300px;
   height: auto;
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.7));
 }
 
 .hero-content {
