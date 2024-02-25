@@ -59,30 +59,33 @@ export default {
       this.isLoggedIn = false;
       this.username = '';
 
-      // Redirect to /login
       this.$router.push('/login');
     },
 
 
     async checkTokenAndUsername() {
-    try {
-      this.isLoggedIn = await verifyToken();
+      try {
+        this.isLoggedIn = await verifyToken();
 
-      const usernameCookie = this.getCookie('username');
-      const tokenCookie = this.getCookie('token');
+        const usernameCookie = this.getCookie('username');
+        const tokenCookie = this.getCookie('token');
 
-      if (!usernameCookie || !tokenCookie) {
-        await this.logout();
-        return;
+        if (!usernameCookie || !tokenCookie) {
+          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+          this.isLoggedIn = false;
+          this.username = '';
+          return;
+        }
+
+        if (usernameCookie) {
+          this.username = usernameCookie;
+        }
+      } catch (error) {
+        console.error('Error verifying token:', error);
       }
-
-      if (usernameCookie) {
-        this.username = usernameCookie;
-      }
-    } catch (error) {
-      console.error('Error verifying token:', error);
-    }
-  },
+    },
     goToLogin() {
       this.$router.push('/login');
     },
