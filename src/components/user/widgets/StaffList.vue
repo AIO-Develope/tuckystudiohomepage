@@ -199,6 +199,12 @@ export default {
   margin-right: auto;
 }
 
+
+.row {
+  max-height: calc(100vh - 190px);
+  overflow-y: auto;
+}
+
 .roles-container {
   margin-top: 0.5rem;
   display: inline-block;

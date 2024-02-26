@@ -120,6 +120,12 @@ export default {
 <style scoped>
 .container{
     margin-top: 50px;
+
+}
+
+.list-group{
+    max-height: calc(100vh - 250px);
+  overflow-y: auto;
 }
 </style>
   
