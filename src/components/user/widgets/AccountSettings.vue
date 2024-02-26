@@ -27,12 +27,12 @@
                                     <div class="col-md-8">
                                         <form @submit.prevent="submitForm" class="row g-3">
                                             <div class="col-md-6">
-                                                <label for="firstName" class="form-label">first name</label>
+                                                <label for="firstName" class="form-label">First name</label>
                                                 <input type="text" class="form-control" id="firstName"
                                                     v-model="formData.firstName">
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="lastName" class="form-label">last name</label>
+                                                <label for="lastName" class="form-label">Last name</label>
                                                 <input type="text" class="form-control" id="lastName"
                                                     v-model="formData.lastName">
                                             </div>
