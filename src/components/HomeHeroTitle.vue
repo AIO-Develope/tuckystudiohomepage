@@ -9,7 +9,7 @@
           <div class="hero-content">
             <h2 class="hero-title">Tucky Studio</h2>
             <p class="section-text">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel veniam est voluptate in exercitationem fugiat quasi asperiores neque sequi, amet voluptas harum quae blanditiis laborum quibusdam accusantium odio consequatur veritatis!
+              Are you passionate about coding, bot development, and all things related to software development? Look no further! Our Discord community is the ultimate destination for enthusiasts, learners, and seasoned developers alike.
             </p>
             <ul class="list-inline hero-list mt-4">
               <li class="list-inline-item hero-item fly-in" style="animation-delay: 0s;">
@@ -19,7 +19,6 @@
                 </svg>
                 <span class="list-item align-middle mr-2">Coding Help</span>
               </li>
-              <!-- Add animation delay for other list items -->
               <li class="list-inline-item hero-item fly-in" style="animation-delay: 0.2s;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success align-middle mr-1" viewBox="0 0 16 16">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -35,7 +34,7 @@
                 <span class="list-item align-middle mr-2">Support Server</span>
               </li>
             </ul>
-            <button class="btn btn-outline-primary btn-lg mt-3">Join Now</button>
+            <button class="btn btn-outline-primary btn-lg mt-3" @click="joinDiscord">Join Now</button>
           </div>
         </div>
       </div>
@@ -111,5 +110,11 @@
 <script>
 export default {
   name: 'HeroSection',
+  methods: {
+    joinDiscord() {
+      window.open('https://discord.gg/uDWCwMNjEA', '_blank');
+    }
+  }
 }
+
 </script>
