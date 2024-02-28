@@ -103,6 +103,9 @@ export default {
 
 
 <style scoped>
+
+
+
 #HeadTitle {
   transition: all 0.3s ease;
 }
