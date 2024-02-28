@@ -53,15 +53,15 @@ export default {
 }
 
 .scale-up {
-  transform: scale(1.1); /* Scale up the icon slightly */
-  transition: transform 0.3s ease; /* Smooth transition */
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 .feature-container .feature-icon-small {
-  transition: transform 0.3s ease; /* Smooth transition */
+  transition: transform 0.3s ease;
 }
 
 .feature-container:hover .feature-icon-small {
-  transform: scale(1.1); /* Scale up the icon slightly on hover */
+  transform: scale(1.1);
 }
 </style>
