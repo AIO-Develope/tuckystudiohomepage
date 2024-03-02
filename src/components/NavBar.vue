@@ -1,4 +1,6 @@
 <template>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <div class="nav-background">
     <div class="container">
       <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
@@ -33,14 +35,29 @@
               <li><button class="dropdown-item" @click="goToAccount">My Account</button></li>
               <li><button class="dropdown-item" @click="logout">Logout</button></li>
             </ul>
+            <button class="btn btn-outline-primary" @click="toggleDarkMode">
+  <i v-if="darkModeActive" class="fas fa-sun"></i>
+  <i v-else class="fas fa-moon"></i>
+</button>
+
           </div>
         </div>
         <div v-else class="col-md-3 text-end">
           <button type="button" class="btn btn-outline-primary" @click="goToLogin">Login</button>
+          <button class="btn btn-outline-primary" @click="toggleDarkMode">
+  <i v-if="darkModeActive" class="fas fa-sun"></i>
+  <i v-else class="fas fa-moon"></i>
+</button>
         </div>
+
+
       </header>
+      
+      
     </div>
+
   </div>
+
   <router-view></router-view>
 </template>
 
@@ -52,14 +69,19 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      username: ''
+      username: '',
+      darkModeActive: false
+
     };
   },
   created() {
     this.checkTokenAndUsername();
   },
   methods: {
-
+    toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      this.darkModeActive = !this.darkModeActive; // Toggle darkModeActive
+    },
     async logout() {
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -86,6 +108,7 @@ export default {
           this.username = '';
           return;
         }
+        
 
         if (usernameCookie) {
           this.username = usernameCookie;
@@ -111,14 +134,11 @@ export default {
 
 
 <style scoped>
-
-
-
 #HeadTitle {
   transition: all 0.3s ease;
   color: var(--text-color-1);
 
-  
+
 }
 
 #HeadTitle:hover {
@@ -126,8 +146,8 @@ export default {
 }
 
 .nav-background {
-  background-color: var(--background-color-2);
-  
+  background-color: var(--background-color-4);
+
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
@@ -137,7 +157,7 @@ export default {
 .nav-item {
   margin-right: 10px;
   transition: all 0.3s ease;
-  color: var(--text-color-1); /* Default text color */
+  color: var(--text-color-1);
 
 }
 
@@ -151,15 +171,20 @@ export default {
 }
 
 .link-dark {
-    color: var(--text-color-2) !important; /* Use primary link color */
-  }
+  color: var(--text-color-2) !important;
+}
 
-  .link-secondary {
-    color: var(--text-color-1) !important; /* Use secondary link color */
-  }
+.link-secondary {
+  color: var(--text-color-1) !important;
+}
 
 
 .btn-outline-info:focus {
   color: #fff;
+}
+
+.toggle-dark-mode,
+.btn-outline-primary {
+  margin-left: 10px; /* Add space between buttons */
 }
 </style>

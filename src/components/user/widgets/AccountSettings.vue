@@ -333,5 +333,29 @@ export default {
         opacity: 1;
     }
 }
+
+.card {
+    background-color: var(--card-color-1);
+    color: var(--text-color-1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-control {
+    background-color: var(--background-color-2);
+    color: var(--text-color-1);
+}
+
+
+.form-control:focus {
+    background-color: var(--background-color-3);
+    color: var(--text-color-1);
+}
+
+.form-control::placeholder {
+    color: var(--text-color-2);
+}
+
+
 </style>
   

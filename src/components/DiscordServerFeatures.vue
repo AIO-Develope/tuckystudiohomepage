@@ -10,8 +10,8 @@
             <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-3 rounded-3">
               <i class="fa" :class="[feature.icon, { 'scale-up': isHovered === index }]"></i>
             </div>
-            <h4 class="fw-semibold mb-0 text-body-emphasis fs-6">{{ feature.title }}</h4>
-            <p class="text-body-secondary fs-7">{{ feature.description }}</p>
+            <h4 class="fw-semibold mb-0 features-title fs-6">{{ feature.title }}</h4>
+            <p class="fs-7 feature-text">{{ feature.description }}</p>
           </div>
         </div>
       </div>
@@ -63,5 +63,15 @@ export default {
 
 .feature-container:hover .feature-icon-small {
   transform: scale(1.1);
+}
+
+.feature-text{
+  color: var(--text-color-2);
+
+}
+
+.features-title{
+  color: var(--text-color-1);
+
 }
 </style>

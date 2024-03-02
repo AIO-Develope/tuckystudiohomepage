@@ -164,8 +164,7 @@ export default {
 .sidebar {
   width: 290px;
   margin-right: 20px;
-  background-color: #f0f0f0;
-  padding: 20px;
+  background-color: var(--background-color-3);  padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -193,12 +192,12 @@ button {
   width: 100%;
   border: none;
   background-color: transparent;
-  color: #333;
+  color: var(--text-color-1);
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #ddd;
+  background-color: var(--background-color-4);
 }
 
 button.active {
