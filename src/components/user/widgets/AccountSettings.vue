@@ -338,12 +338,14 @@ export default {
     background-color: var(--card-color-1);
     color: var(--text-color-1);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-color: var(--background-color-4);
 }
 
 
 .form-control {
     background-color: var(--background-color-2);
     color: var(--text-color-1);
+    border-color: var(--textbox-border-color) !important;
 }
 
 

@@ -53,7 +53,7 @@
 
 
 <script>
-import UserModal from './UserModal.vue'; // import your modal component
+import UserModal from './UserModal.vue';
 
 import { isAdmin } from '../../../utils/getAccTypes';
 import config from '../../../../config';
@@ -192,6 +192,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .profile-picture {
   width: 80px;
   height: 80px;
@@ -230,6 +232,38 @@ export default {
   height: 245px;
   margin: 10px;
   overflow: hidden;
+  border-color: var(--background-color-4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+
+}
+
+.card-body{
+  background-color: var(--card-color-1);
+  color: var(--text-color-1) !important;
+
+}
+
+.card-footer{
+  background-color: var(--card-color-1) !important;
+  color: var(--text-color-1) !important;
+}
+
+
+.form-control{
+    background-color: var(--background-color-2) !important;
+    color: var(--text-color-1) !important;
+    border-color: var(--textbox-border-color) !important;
+}
+
+
+.form-control:focus {
+    background-color: var(--background-color-3) !important;
+    color: var(--text-color-1) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-color-2) !important;
 }
 
 .card-body {
