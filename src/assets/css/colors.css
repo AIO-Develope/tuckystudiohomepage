@@ -1,21 +1,20 @@
 /* styles.css */
 :root {
-    --background-color-1: #ffffff;
-    --background-color-2: #121212;
-
-
-    --text-color-1: #ffffff;
-    --text-color-2: #ffffff;
-
-  }
+  --background-color-1: #ffffff;
+  --background-color-2: rgb(237, 237, 237, 0.8);
   
-  body.dark-mode {
-    --background-color-1: #000000;
-    --background-color-2: #282828;
-    --text-color-1: #ffffff;
-    --text-color-2: #b4b4b4;
-    --text-color-3: #b4b4b4;
+
+  --text-color-1: #ffffff;
+  --text-color-2: #ffffff;
+
+}
+
+body.dark-mode {
+  --background-color-1: #000000;
+  --background-color-2: #282828;
+  --text-color-1: #ffffff;
+  --text-color-2: #b4b4b4;
+  --text-color-3: #b4b4b4;
 
 
-  }
-  
+}
