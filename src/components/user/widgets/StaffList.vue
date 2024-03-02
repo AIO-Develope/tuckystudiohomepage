@@ -1,5 +1,4 @@
 <template>
-  <!-- eslint-disable -->
 
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -319,6 +318,7 @@ export default {
   border: none;
   cursor: pointer;
   transition: color 0.3s;
+  color: var(--text-color-3);
 }
 
 .edit-button {
@@ -327,6 +327,8 @@ export default {
   border: none;
   cursor: pointer;
   transition: color 0.3s;
+  color: var(--text-color-3);
+
 }
 
 

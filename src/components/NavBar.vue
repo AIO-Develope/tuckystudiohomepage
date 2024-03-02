@@ -146,7 +146,7 @@ export default {
 }
 
 .nav-background {
-  background-color: var(--background-color-4);
+  background-color: var(--background-color-nav);
 
   backdrop-filter: blur(10px);
   position: sticky;

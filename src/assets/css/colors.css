@@ -3,15 +3,16 @@
   --background-color-1: #ffffff;
   --background-color-2: #ffffff;
   --background-color-3: #f8f9fa;
-  --background-color-4: rgb(237, 237, 237, 0.8);
+  --background-color-4: #ededed;
   --card-color-1: #fff;
 
   --textbox-border-color: #d4d4d4;
 
 
 
+  --background-color-nav: rgb(237, 237, 237, 0.8);
 
-  
+  --role-item-border: #e4e4e4;
   
 
   --text-color-1: #212529;
@@ -25,17 +26,22 @@ body.dark-mode {
   --background-color-1: #000000;
   --background-color-2: #141414;
   --background-color-3: #111111;
-  --background-color-4: rgba(5, 5, 5, 0.8);
+  --background-color-4: #050505;
   --background-color-5: #717171;
 
   --card-color-1: #282828;
 
+  --background-color-nav: rgba(5, 5, 5, 0.8);
 
   --text-color-1: #ffffff;
   --text-color-2: #b4b4b4;
   --text-color-3: #888888;
 
   --textbox-border-color: #525252;
+
+
+  --role-item-border: #222222;
+
 
 
 
