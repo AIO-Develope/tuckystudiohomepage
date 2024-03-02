@@ -116,6 +116,9 @@ export default {
 
 #HeadTitle {
   transition: all 0.3s ease;
+  color: var(--text-color-1);
+
+  
 }
 
 #HeadTitle:hover {
@@ -123,7 +126,8 @@ export default {
 }
 
 .nav-background {
-  background-color: rgb(237, 237, 237, 0.8);
+  background-color: var(--background-color-2);
+  
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
@@ -133,7 +137,10 @@ export default {
 .nav-item {
   margin-right: 10px;
   transition: all 0.3s ease;
+  color: var(--text-color-1); /* Default text color */
+
 }
+
 
 .nav-item:hover {
   transform: scale(1.1);
@@ -142,6 +149,14 @@ export default {
 .btn-outline-info:hover {
   color: #fff;
 }
+
+.link-dark {
+    color: var(--text-color-2) !important; /* Use primary link color */
+  }
+
+  .link-secondary {
+    color: var(--text-color-1) !important; /* Use secondary link color */
+  }
 
 
 .btn-outline-info:focus {

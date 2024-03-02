@@ -12,6 +12,12 @@ export default {
 };
 
 import '@/assets/css/colors.css';
+
+</script>
+
+<script setup>
+document.body.classList.toggle('dark-mode', false);
+
 </script>
 
 
@@ -21,6 +27,6 @@ import '@/assets/css/colors.css';
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: var(--text-color-1);
 }
 </style>
