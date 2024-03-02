@@ -10,7 +10,11 @@ export default {
     NavBar
   }
 };
+
+import '@/assets/css/colors.css';
 </script>
+
+
 
 <style>
 #app {

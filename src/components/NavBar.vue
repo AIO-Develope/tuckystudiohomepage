@@ -14,6 +14,14 @@
             <router-link to="/projects" class="nav-link px-2"
               :class="{ 'link-secondary': $route.path === '/projects', 'link-dark': $route.path !== '/projects' }">Projects</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/contact" class="nav-link px-2"
+              :class="{ 'link-secondary': $route.path === '/contact', 'link-dark': $route.path !== '/contact' }">Contact</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/wiki" class="nav-link px-2"
+              :class="{ 'link-secondary': $route.path === '/wiki', 'link-dark': $route.path !== '/wiki' }">Wiki</router-link>
+          </li>
         </ul>
         <div v-if="isLoggedIn" class="col-md-3 text-end">
           <div class="dropdown">
