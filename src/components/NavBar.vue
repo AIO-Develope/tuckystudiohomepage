@@ -36,24 +36,24 @@
               <li><button class="dropdown-item" @click="logout">Logout</button></li>
             </ul>
             <button class="btn btn-outline-primary" @click="toggleDarkMode">
-  <i v-if="darkModeActive" class="fas fa-sun"></i>
-  <i v-else class="fas fa-moon"></i>
-</button>
+              <i v-if="darkModeActive" class="fas fa-sun"></i>
+              <i v-else class="fas fa-moon"></i>
+            </button>
 
           </div>
         </div>
         <div v-else class="col-md-3 text-end">
           <button type="button" class="btn btn-outline-primary" @click="goToLogin">Login</button>
           <button class="btn btn-outline-primary" @click="toggleDarkMode">
-  <i v-if="darkModeActive" class="fas fa-sun"></i>
-  <i v-else class="fas fa-moon"></i>
-</button>
+            <i v-if="darkModeActive" class="fas fa-sun"></i>
+            <i v-else class="fas fa-moon"></i>
+          </button>
         </div>
 
 
       </header>
-      
-      
+
+
     </div>
 
   </div>
@@ -108,7 +108,7 @@ export default {
           this.username = '';
           return;
         }
-        
+
 
         if (usernameCookie) {
           this.username = usernameCookie;
@@ -185,6 +185,7 @@ export default {
 
 .toggle-dark-mode,
 .btn-outline-primary {
-  margin-left: 10px; /* Add space between buttons */
+  margin-left: 10px;
+  /* Add space between buttons */
 }
 </style>

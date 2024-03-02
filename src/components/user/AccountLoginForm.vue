@@ -132,6 +132,35 @@ export default {
 </script>
 
 <style>
+.card{
+  border-color: var(--background-color-4) !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.card-body{
+  background-color: var(--card-color-1);
+  color: var(--text-color-1) !important;
+
+}
+
+
+.form-control{
+    background-color: var(--background-color-2) !important;
+    color: var(--text-color-1) !important;
+    border-color: var(--textbox-border-color) !important;
+}
+
+
+.form-control:focus {
+    background-color: var(--background-color-3) !important;
+    color: var(--text-color-1) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-color-2) !important;
+}
+
 .login-form {
   animation: flyAndFadeIn 0.5s ease forwards;
   opacity: 0;
