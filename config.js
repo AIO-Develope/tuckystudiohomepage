@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: "http://45.11.229.26:2087"
+    apiUrl: "http://localhost:3000"
   };
   
   export default config;
