@@ -17,7 +17,7 @@
         </div>
   
         <!-- User Cards -->
-        <div v-else class="col-md-4" v-for="(user, index) in filteredUsers" :key="index">
+        <div v-else class="col-md-4" v-for="(user, index) in users" :key="index">
           <div class="card mb-4" v-bind:class="{ 'animated-card': animateCards }"
             v-bind:style="{ 'animation-delay': index * 0.1 + 's' }">
             <div class="card-body d-flex flex-column">
@@ -74,61 +74,13 @@
     mounted() {
       this.checkAdmin();
       this.fetchUsers();
-      this.username = this.getCookie("username");
     },
-    computed: {
-      filteredUsers() {
-        return this.users.filter(user => {
-          const fullName = user.fullName.toLowerCase();
-          const username = user.username.toLowerCase();
-          const email = user.email.toLowerCase();
-          const query = this.searchQuery.toLowerCase();
-          return fullName.includes(query) || username.includes(query) || email.includes(query);
-        });
-      }
-    },
+
     methods: {
-      handleSave(savedUserData) {
-        const roleUUIDs = savedUserData.roles.map(role => role.id);
-        const userDataWithRoleUUIDs = {
-          roles: roleUUIDs
-        };
+     
   
-        const token = this.getCookie("token");
-  
-        fetch(`${config.apiUrl}/admin/user/edit/${savedUserData.uuid}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${token}`
-          },
-          body: JSON.stringify(userDataWithRoleUUIDs)
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-  
-          .catch(error => {
-            console.error('Error:', error);
-          });
-  
-  
-  
-        this.$emit('close');
-        setTimeout(this.fetchUsers, 400);
-  
-      },
-  
-      openEditModal(user) {
-        this.currentUserForEdit = user;
-        this.isModalOpen = true;
-      },
-      async checkAdmin() {
-        this.isAdmin = await isAdmin();
-      },
+      
+     
       fetchUsers() {
         this.isLoading = true;
         const token = this.getCookie("token");
@@ -154,33 +106,8 @@
             this.isLoading = false;
           });
       },
-      getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-      },
-      deleteUser(user) {
-        if (confirm(`Are you sure you want to delete ${user.username}?`)) {
-          const token = this.getCookie("token");
-          fetch(`${config.apiUrl}/admin/user/delete/${user.uuid}`, {
-            method: 'DELETE',
-            headers: {
-              Authorization: token
-            }
-          })
-            .then(response => {
-              if (response.ok) {
-                this.users = this.users.filter(u => u.uuid !== user.uuid);
-                console.log('User deleted successfully.');
-              } else {
-                throw new Error('Failed to delete user');
-              }
-            })
-            .catch(error => {
-              console.error('Error deleting user:', error);
-            });
-        }
-      }
+      
+      
   
     }
   
