@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="card">
-            <div class="card-header bg-primary text-white">Register</div>
+            <div class="card-header bg-primary text-light">Register</div>
             <div class="card-body">
               <form @submit.prevent="register">
                 <div class="mb-3">
@@ -25,13 +25,13 @@
               </form>
             </div>
             <transition name="fade">
-              <div v-if="error" class="card-footer bg-danger text-white">{{ error }}</div>
+              <div v-if="error" class="card-footer bg-danger text-light">{{ error }}</div>
             </transition>
             <transition name="fade">
-              <div v-if="success" class="card-footer bg-success text-white">{{ success }}</div>
+              <div v-if="success" class="card-footer bg-success text-light">{{ success }}</div>
             </transition>
             <transition name="fade">
-              <div v-if="!setPassword && tempPassword" class="card-footer bg-light">
+              <div v-if="!setPassword && tempPassword" class="card-footer">
                 <p>Your temporary password:</p>
                 <div class="input-group">
                   <input type="password" class="form-control" :value="censoredTempPassword" disabled>
@@ -142,10 +142,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .register-form {
   animation: flyAndFadeIn 0.5s ease forwards;
   opacity: 0;
+
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -167,4 +168,39 @@ export default {
     opacity: 1;
   }
 }
+.card{
+  border-color: var(--background-color-4) !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.card-body{
+  background-color: var(--card-color-1);
+  color: var(--text-color-1) !important;
+
+}
+
+.card-footer{
+  background-color: var(--card-color-1) !important;
+  color: var(--text-color-1) !important;
+}
+
+
+.form-control{
+    background-color: var(--background-color-2) !important;
+    color: var(--text-color-1) !important;
+    border-color: var(--textbox-border-color) !important;
+}
+
+
+.form-control:focus {
+    background-color: var(--background-color-3) !important;
+    color: var(--text-color-1) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-color-2) !important;
+}
+
+
 </style>

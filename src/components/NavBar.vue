@@ -36,24 +36,24 @@
               <li><button class="dropdown-item" @click="logout">Logout</button></li>
             </ul>
             <button class="btn btn-outline-primary" @click="toggleDarkMode">
-  <i v-if="darkModeActive" class="fas fa-sun"></i>
-  <i v-else class="fas fa-moon"></i>
-</button>
+              <i v-if="darkModeActive" class="fas fa-sun"></i>
+              <i v-else class="fas fa-moon"></i>
+            </button>
 
           </div>
         </div>
         <div v-else class="col-md-3 text-end">
           <button type="button" class="btn btn-outline-primary" @click="goToLogin">Login</button>
           <button class="btn btn-outline-primary" @click="toggleDarkMode">
-  <i v-if="darkModeActive" class="fas fa-sun"></i>
-  <i v-else class="fas fa-moon"></i>
-</button>
+            <i v-if="darkModeActive" class="fas fa-sun"></i>
+            <i v-else class="fas fa-moon"></i>
+          </button>
         </div>
 
 
       </header>
-      
-      
+
+
     </div>
 
   </div>
@@ -71,45 +71,28 @@ export default {
       isLoggedIn: false,
       username: '',
       darkModeActive: false
-
     };
   },
   created() {
     this.checkTokenAndUsername();
+    this.loadDarkModeFromCookie();
   },
   methods: {
     toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
-      this.darkModeActive = !this.darkModeActive; // Toggle darkModeActive
+      this.darkModeActive = !this.darkModeActive;
+      this.saveDarkModeToCookie();
     },
     async logout() {
-      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
+      this.clearCookies();
       this.isLoggedIn = false;
       this.username = '';
-
       this.$router.push('/login');
     },
-
-
     async checkTokenAndUsername() {
       try {
         this.isLoggedIn = await verifyToken();
-
         const usernameCookie = this.getCookie('username');
-        const tokenCookie = this.getCookie('token');
-
-        if (!usernameCookie || !tokenCookie) {
-          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-          document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-          this.isLoggedIn = false;
-          this.username = '';
-          return;
-        }
-        
-
         if (usernameCookie) {
           this.username = usernameCookie;
         }
@@ -127,6 +110,22 @@ export default {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
       if (parts.length === 2) return parts.pop().split(';').shift();
+    },
+    saveDarkModeToCookie() {
+      document.cookie = `darkModeActive=${this.darkModeActive}; path=/;`;
+    },
+    loadDarkModeFromCookie() {
+      const darkModeCookie = this.getCookie('darkModeActive');
+      if (darkModeCookie) {
+        this.darkModeActive = darkModeCookie === 'true';
+        if (this.darkModeActive) {
+          document.body.classList.add('dark-mode');
+        }
+      }
+    },
+    clearCookies() {
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
   }
 };
@@ -146,7 +145,7 @@ export default {
 }
 
 .nav-background {
-  background-color: var(--background-color-4);
+  background-color: var(--background-color-nav);
 
   backdrop-filter: blur(10px);
   position: sticky;
@@ -185,6 +184,6 @@ export default {
 
 .toggle-dark-mode,
 .btn-outline-primary {
-  margin-left: 10px; /* Add space between buttons */
+  margin-left: 10px;
 }
 </style>
