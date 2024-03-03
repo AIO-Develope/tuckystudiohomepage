@@ -264,11 +264,16 @@ export default {
 .default-avatar {
     position: relative;
     cursor: pointer;
+
+    
 }
+
+
 
 .img-thumbnail {
     max-width: 100%;
     height: auto;
+
 }
 
 .form-label {
@@ -310,6 +315,7 @@ export default {
 .profile-settings-form {
     animation: flyAndFadeIn 0.5s ease forwards;
     opacity: 0;
+    
 }
 
 .fade-enter-active,
@@ -333,5 +339,38 @@ export default {
         opacity: 1;
     }
 }
+
+.card {
+    background-color: var(--card-color-1);
+    color: var(--text-color-1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-color: var(--background-color-4);
+    
+}
+
+
+.form-control {
+    background-color: var(--background-color-2);
+    color: var(--text-color-1);
+    border-color: var(--textbox-border-color) !important;
+    
+}
+
+
+.form-control:focus {
+    background-color: var(--background-color-3);
+    color: var(--text-color-1);
+}
+
+.form-control::placeholder {
+    color: var(--text-color-2);
+}
+
+
+.form-text{
+    color: var(--text-color-3) !important;
+}
+
+
 </style>
   

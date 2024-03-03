@@ -29,7 +29,8 @@
 
 <style scoped>
 .background{
-    background-color: #f3f3f3;
+    background-color: var(--background-color-3);
+;
 }
 .card {
     border: none;
@@ -40,6 +41,7 @@
     align-items: center;
     height: 100%;
     padding: 20px;
+    background-color: var(--card-color-1);
 }
 
 .card img {
@@ -56,6 +58,8 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    color: var(--text-color-2);
+
 }
 
 .card:hover {
@@ -67,12 +71,14 @@
     width: 140px;
     height: 140px;
     object-fit: cover;
+    
 }
 
 .card-title {
     font-size: 1.5rem;
     margin-top: 1rem;
     font-size: 30px;
+    color: var(--text-color-1);
 }
 
 .card-text {

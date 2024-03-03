@@ -79,13 +79,13 @@
   margin-bottom: 20px;
   font-weight: bold;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: var(--text-color-1);
 }
 
 .section-text {
   font-size: 1.2rem;
   font-weight: lighter;
-  color: #666;
+  color: var(--text-color-2);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

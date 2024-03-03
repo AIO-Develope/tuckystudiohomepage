@@ -140,7 +140,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,10 +148,10 @@ export default {
 }
 
 .modal-container {
-    background-color: #fff;
+    background-color: var(--background-color-3);
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     width: 400px;
 }
 
@@ -171,7 +171,17 @@ export default {
     border: none;
     cursor: pointer;
     font-size: 20px;
+    color: var(--text-color-1);
 }
+
+.close-btn:hover {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: red;
+}
+
 
 .modal-body {
     padding: 20px 0;

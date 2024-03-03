@@ -126,6 +126,29 @@ export default {
 .list-group{
     max-height: calc(100vh - 250px);
   overflow-y: auto;
+  
 }
+
+.form-control{
+    background-color: var(--background-color-2) !important;
+    color: var(--text-color-1) !important;
+    border-color: var(--textbox-border-color) !important;
+}
+
+
+.form-control:focus {
+    background-color: var(--background-color-3) !important;
+    color: var(--text-color-1) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-color-2) !important;
+}
+.list-group-item{
+    color: var(--text-color-1);
+    background-color: var(--background-color-3);
+    border-color: var(--role-item-border);
+}
+
 </style>
   

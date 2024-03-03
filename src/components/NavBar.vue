@@ -1,4 +1,6 @@
 <template>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <div class="nav-background">
     <div class="container">
       <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
@@ -14,6 +16,14 @@
             <router-link to="/projects" class="nav-link px-2"
               :class="{ 'link-secondary': $route.path === '/projects', 'link-dark': $route.path !== '/projects' }">Projects</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/contact" class="nav-link px-2"
+              :class="{ 'link-secondary': $route.path === '/contact', 'link-dark': $route.path !== '/contact' }">Contact</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/wiki" class="nav-link px-2"
+              :class="{ 'link-secondary': $route.path === '/wiki', 'link-dark': $route.path !== '/wiki' }">Wiki</router-link>
+          </li>
         </ul>
         <div v-if="isLoggedIn" class="col-md-3 text-end">
           <div class="dropdown">
@@ -25,14 +35,29 @@
               <li><button class="dropdown-item" @click="goToAccount">My Account</button></li>
               <li><button class="dropdown-item" @click="logout">Logout</button></li>
             </ul>
+            <button class="btn btn-outline-primary" @click="toggleDarkMode">
+              <i v-if="darkModeActive" class="fas fa-sun"></i>
+              <i v-else class="fas fa-moon"></i>
+            </button>
+
           </div>
         </div>
         <div v-else class="col-md-3 text-end">
           <button type="button" class="btn btn-outline-primary" @click="goToLogin">Login</button>
+          <button class="btn btn-outline-primary" @click="toggleDarkMode">
+            <i v-if="darkModeActive" class="fas fa-sun"></i>
+            <i v-else class="fas fa-moon"></i>
+          </button>
         </div>
+
+
       </header>
+
+
     </div>
+
   </div>
+
   <router-view></router-view>
 </template>
 
@@ -44,41 +69,30 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      username: ''
+      username: '',
+      darkModeActive: false
     };
   },
   created() {
     this.checkTokenAndUsername();
+    this.loadDarkModeFromCookie();
   },
   methods: {
-
+    toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      this.darkModeActive = !this.darkModeActive;
+      this.saveDarkModeToCookie();
+    },
     async logout() {
-      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
+      this.clearCookies();
       this.isLoggedIn = false;
       this.username = '';
-
       this.$router.push('/login');
     },
-
-
     async checkTokenAndUsername() {
       try {
         this.isLoggedIn = await verifyToken();
-
         const usernameCookie = this.getCookie('username');
-        const tokenCookie = this.getCookie('token');
-
-        if (!usernameCookie || !tokenCookie) {
-          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-          document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-          this.isLoggedIn = false;
-          this.username = '';
-          return;
-        }
-
         if (usernameCookie) {
           this.username = usernameCookie;
         }
@@ -96,6 +110,22 @@ export default {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
       if (parts.length === 2) return parts.pop().split(';').shift();
+    },
+    saveDarkModeToCookie() {
+      document.cookie = `darkModeActive=${this.darkModeActive}; path=/;`;
+    },
+    loadDarkModeFromCookie() {
+      const darkModeCookie = this.getCookie('darkModeActive');
+      if (darkModeCookie) {
+        this.darkModeActive = darkModeCookie === 'true';
+        if (this.darkModeActive) {
+          document.body.classList.add('dark-mode');
+        }
+      }
+    },
+    clearCookies() {
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
   }
 };
@@ -103,11 +133,11 @@ export default {
 
 
 <style scoped>
-
-
-
 #HeadTitle {
   transition: all 0.3s ease;
+  color: var(--text-color-1);
+
+
 }
 
 #HeadTitle:hover {
@@ -115,7 +145,8 @@ export default {
 }
 
 .nav-background {
-  background-color: rgb(237, 237, 237, 0.8);
+  background-color: var(--background-color-nav);
+
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
@@ -125,7 +156,10 @@ export default {
 .nav-item {
   margin-right: 10px;
   transition: all 0.3s ease;
+  color: var(--text-color-1);
+
 }
+
 
 .nav-item:hover {
   transform: scale(1.1);
@@ -135,8 +169,21 @@ export default {
   color: #fff;
 }
 
+.link-dark {
+  color: var(--text-color-2) !important;
+}
+
+.link-secondary {
+  color: var(--text-color-1) !important;
+}
+
 
 .btn-outline-info:focus {
   color: #fff;
+}
+
+.toggle-dark-mode,
+.btn-outline-primary {
+  margin-left: 10px;
 }
 </style>
