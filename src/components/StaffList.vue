@@ -23,19 +23,12 @@
             <div class="card-body d-flex flex-column">
               <div class="d-flex justify-content-between align-items-start mb-3">
                 <img :src="user.profilePicture" alt="Profile Picture" class="profile-picture">
-                <!-- Delete Button -->
-                <button v-if="isAdmin && user.username !== username" @click="deleteUser(user)" class="delete-button">
-                  <i class="fa fa-trash-o"></i>
-                </button>
-                <button v-if="isAdmin" @click="openEditModal(user)" class="edit-button">
-                  <i class="fa fa-pencil"></i>
-                </button>
+                
               </div>
               <div>
                 <h5 class="card-title mb-1">{{ user.fullName }}</h5>
                 <p class="card-text mb-1">@{{ user.username }}</p>
   
-                <p class="card-text mb-0">{{ user.email }}</p>
                 <div class="roles-container">
                   <span v-for="(role, roleIndex) in user.roles" :key="roleIndex" class="badge">{{ role.roleName }}</span>
                 </div>
@@ -51,7 +44,6 @@
   
   <script>
   
-  import { isAdmin } from '../utils/getAccTypes';
   import config from '../../config';
   export default {
     components: {
@@ -63,7 +55,6 @@
         isLoading: false,
         error: null,
         animateCards: false,
-        isAdmin: false,
         username: null,
         searchQuery: '',
         isModalOpen: false,
@@ -72,7 +63,6 @@
       };
     },
     mounted() {
-      this.checkAdmin();
       this.fetchUsers();
     },
 
@@ -83,11 +73,8 @@
      
       fetchUsers() {
         this.isLoading = true;
-        const token = this.getCookie("token");
-        fetch(`${config.apiUrl}/auth/staff`, {
-          headers: {
-            Authorization: `${token}`
-          }
+        fetch(`${config.apiUrl}/user/staff`, {
+          
         })
           .then(response => response.json())
           .then(data => {
@@ -148,50 +135,31 @@
   }
   
   .card {
-    width: 300px;
+    width: 230px;
     height: 245px;
     margin: 10px;
     overflow: hidden;
     border-color: var(--background-color-4);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-  
   }
   
   .card-body{
     background-color: var(--card-color-1);
     color: var(--text-color-1) !important;
-  
+    align-items: center;
   }
   
   .card-footer{
     background-color: var(--card-color-1) !important;
     color: var(--text-color-1) !important;
+    
   }
   
   
-  .form-control{
-      background-color: var(--background-color-2) !important;
-      color: var(--text-color-1) !important;
-      border-color: var(--textbox-border-color) !important;
-  }
+
   
-  
-  .form-control:focus {
-      background-color: var(--background-color-3) !important;
-      color: var(--text-color-1) !important;
-  }
-  
-  .form-control::placeholder {
-      color: var(--text-color-2) !important;
-  }
-  
-  .card-body {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
+
   
   .card-title,
   .card-text {
